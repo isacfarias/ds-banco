@@ -1,4 +1,4 @@
-package com.farias.banco.dspessoa.model;
+package com.farias.banco.dscontacorrente.model;
 
 import java.io.Serializable;
 
@@ -9,7 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.farias.banco.dspessoa.enums.PessoaTipoEnum;
+import com.farias.banco.dscontacorrente.enums.ContaTipo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,30 +19,27 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "pessoa")
-public class Pessoa implements Serializable {
-	
+@Table(name = "contacorrente")
+public class ContaCorrente implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@Column(name ="cco_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "pes_id")
 	private Long id;
 	
-	@Column(name ="pes_nome")
-	private String nome;
+	@Column(name = "cco_numero", unique = true)
+	private Integer numero;
 	
-	@Column(name ="pes_cpfCnpj", unique = true)
-	private String cpfCnpj;
+	@Column(name = "pes_id")
+	private Long pessoa;
 	
-	@Column(name ="pes_score")
-	private Integer score;
+	@Column(name = "cco_agencia")
+	private Integer agencia;
 	
-	@Column(name = "pes_tipo")
-	private String tipo;
-	
-
+	@Column(name = "cco_tipo")
+	private ContaTipo tipo;
 }

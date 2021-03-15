@@ -23,9 +23,9 @@ public class PessoaService {
 		int tipoPessoa = pessoa.getCpfCnpj().length();
 		
 		if (tipoPessoa == PessoaConstants.PESSOA_JURIDICA) {
-			pessoa.setTipo(PessoaTipoEnum.PJ);
+			pessoa.setTipo(PessoaTipoEnum.PJ.name());
 		} else if (tipoPessoa <= PessoaConstants.PESSOA_FISICA) {
-			pessoa.setTipo(PessoaTipoEnum.PF);
+			pessoa.setTipo(PessoaTipoEnum.PF.name());
 		}
 		
 		pessoa.setScore(scoreUtils.score());
