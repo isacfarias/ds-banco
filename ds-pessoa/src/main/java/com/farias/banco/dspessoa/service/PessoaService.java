@@ -18,9 +18,10 @@ public class PessoaService {
 	@Autowired
 	private ScoreUtils scoreUtils;
 	
-	public Pessoa cadastroPessoa(Pessoa pessoa) {
+	public Pessoa cadastrarPessoa(Pessoa pessoa) {
 		
-		int tipoPessoa = pessoa.getCpfCnpj().toString().getBytes().length;
+		int tipoPessoa = pessoa.getCpfCnpj().length();
+		
 		if (tipoPessoa == PessoaConstants.PESSOA_JURIDICA) {
 			pessoa.setTipo(PessoaTipoEnum.PJ);
 		} else if (tipoPessoa <= PessoaConstants.PESSOA_FISICA) {
@@ -28,6 +29,7 @@ public class PessoaService {
 		}
 		
 		pessoa.setScore(scoreUtils.score());
+		repository.save(pessoa);
 		return pessoa;
 	}
 	

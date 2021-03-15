@@ -1,5 +1,7 @@
 package com.farias.banco.dspessoa.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,8 +20,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name = "pessoa")
-public class Pessoa {
+public class Pessoa implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "pes_id")
@@ -29,7 +36,7 @@ public class Pessoa {
 	private String nome;
 	
 	@Column(name ="pes_cpfCnpj")
-	private Integer cpfCnpj;
+	private String cpfCnpj;
 	
 	@Column(name ="pes_score")
 	private Integer score;
