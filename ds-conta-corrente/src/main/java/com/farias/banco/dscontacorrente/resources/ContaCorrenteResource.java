@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.farias.banco.dscontacorrente.ContaCorrenteService;
 import com.farias.banco.dscontacorrente.model.ContaCorrente;
 import com.farias.banco.dscontacorrente.model.Pessoa;
 import com.farias.banco.dscontacorrente.repository.ContaCorrenteRepository;
+import com.farias.banco.dscontacorrente.service.ContaCorrenteService;
 
 @RestController
 @RequestMapping(value = "/contacorrente")

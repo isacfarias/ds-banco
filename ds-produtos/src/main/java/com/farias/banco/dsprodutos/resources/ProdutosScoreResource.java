@@ -1,6 +1,8 @@
 package com.farias.banco.dsprodutos.resources;
 
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.farias.banco.dsprodutos.dto.ProdutosDTO;
 import com.farias.banco.dsprodutos.model.ProdutoScore;
 import com.farias.banco.dsprodutos.repository.ProdutosScoreRepository;
 
@@ -40,9 +43,12 @@ public class ProdutosScoreResource {
 	}
 	
 	@GetMapping("/score/{score}")
-	public ResponseEntity<List<ProdutoScore>> produtosPorScore(@PathVariable Integer score) {
-		List<ProdutoScore> produtosScore = repository.findByScoreMinGreaterThanEqualAndScoreMaxLessThanEqual(score, score);
-		return ResponseEntity.ok(produtosScore);		
+	public ResponseEntity<List<ProdutosDTO>> produtosPorScore(@PathVariable Integer score) {
+		List<ProdutosDTO> produtos = repository.findByScoreMinGreaterThanEqualAndScoreMaxLessThanEqual(score, score)
+				                               .stream()
+				                               .map( produtosScore -> new ProdutosDTO(produtosScore.getProdutoTipo().getId(), produtosScore.getValor()))
+				                               .collect(Collectors.toList());
+		return ResponseEntity.ok(produtos);		
 	}
 	
 }

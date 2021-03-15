@@ -1,4 +1,4 @@
-package com.farias.banco.dscontacorrente;
+package com.farias.banco.dscontacorrente.service;
 
 import java.util.List;
 
