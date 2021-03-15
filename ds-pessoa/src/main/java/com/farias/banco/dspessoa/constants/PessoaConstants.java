@@ -1,4 +1,4 @@
-package com.farias.banco.dspessoa;
+package com.farias.banco.dspessoa.constants;
 
 public class PessoaConstants {
 

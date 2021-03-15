@@ -3,7 +3,7 @@ package com.farias.banco.dspessoa.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.farias.banco.dspessoa.PessoaConstants;
+import com.farias.banco.dspessoa.constants.PessoaConstants;
 import com.farias.banco.dspessoa.enums.PessoaTipoEnum;
 import com.farias.banco.dspessoa.model.Pessoa;
 import com.farias.banco.dspessoa.repository.PessoaRepository;
