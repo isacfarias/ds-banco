@@ -1,9 +1,11 @@
 package com.farias.banco.dspessoa.model;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 import com.farias.banco.dspessoa.enums.PessoaTipoEnum;
 
@@ -14,12 +16,14 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
+@Table(name = "pessoa")
 public class Pessoa {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "pes_id")
-	private Integer id;
+	private Long id;
 	
 	@Column(name ="pes_nome")
 	private String nome;
