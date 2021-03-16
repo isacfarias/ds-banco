@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.farias.banco.dscontacorrente.builder.ContaCorrenteBuilder;
 import com.farias.banco.dscontacorrente.config.AppConfig;
+import com.farias.banco.dscontacorrente.dto.PessoaContaCorrenteDTO;
+import com.farias.banco.dscontacorrente.feignclients.ContaCorrenteProdutosFeignClients;
 import com.farias.banco.dscontacorrente.model.ContaCorrente;
 import com.farias.banco.dscontacorrente.model.Pessoa;
 import com.farias.banco.dscontacorrente.repository.ContaCorrenteRepository;
@@ -20,6 +22,9 @@ public class ContaCorrenteService {
 
 	@Autowired
 	private ContaCorrenteRepository repository;
+	
+	@Autowired
+	private ContaCorrenteProdutosFeignClients contaCorrenteProdutosFeignClients;
 
 	@Autowired
 	private ContaCorrenteNumeroUtils contaNumero;
@@ -31,8 +36,12 @@ public class ContaCorrenteService {
 				.pessoa(pessoa.getId())
 				.contaTipo(pessoa.getTipo())
 				.builder();
+		
+		contacorrente = repository.save(contacorrente);
+		
+		contaCorrenteProdutosFeignClients.vincularProdutosContaCorrente(new PessoaContaCorrenteDTO(pessoa.getId(), contacorrente.getId(), pessoa.getScore()));
 
-		return repository.save(contacorrente);
+		return contacorrente;
 	}
 
 	private Integer contaNumero() {
