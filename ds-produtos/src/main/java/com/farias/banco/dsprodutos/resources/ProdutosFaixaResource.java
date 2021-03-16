@@ -43,7 +43,7 @@ public class ProdutosFaixaResource {
 	
 	@GetMapping("/score/{score}")
 	public ResponseEntity<List<ProdutosDTO>> produtosPorScore(@PathVariable Integer score) {
-		List<ProdutosDTO> produtos = repository.findByScoreMinGreaterThanEqualAndScoreMaxLessThanEqual(score, score)
+		List<ProdutosDTO> produtos = repository.findByScoreFaixa(score)
 				                               .stream()
 				                               .map( produtosScore -> new ProdutosDTO(produtosScore.getProdutoTipo().getId(), produtosScore.getValor()))
 				                               .collect(Collectors.toList());
