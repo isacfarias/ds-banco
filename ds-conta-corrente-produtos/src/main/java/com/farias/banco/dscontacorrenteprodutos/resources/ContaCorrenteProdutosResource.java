@@ -22,5 +22,7 @@ public class ContaCorrenteProdutosResource {
 		service.vincularProdutosContaCorrente(pessoaContaCorrente);
 		return ResponseEntity.noContent().build();
 	}
+	
+	
 
 }

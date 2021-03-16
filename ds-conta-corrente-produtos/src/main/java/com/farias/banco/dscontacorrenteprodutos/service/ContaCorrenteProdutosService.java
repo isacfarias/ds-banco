@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.farias.banco.dscontacorrenteprodutos.dto.PessoaContaCorrenteDTO;
 import com.farias.banco.dscontacorrenteprodutos.dto.ProdutosDTO;
-import com.farias.banco.dscontacorrenteprodutos.feignclients.ProdutosScoreFeignClient;
+import com.farias.banco.dscontacorrenteprodutos.feignclients.ProdutosFaixaFeignClient;
 import com.farias.banco.dscontacorrenteprodutos.model.ContaCorrenteProdutos;
 import com.farias.banco.dscontacorrenteprodutos.repository.ContaCorrenteProdutosRepository;
 
@@ -18,7 +18,7 @@ public class ContaCorrenteProdutosService {
 	private ContaCorrenteProdutosRepository repository;
 
 	@Autowired
-	private ProdutosScoreFeignClient produtosScoreFeignClient; 
+	private ProdutosFaixaFeignClient produtosScoreFeignClient; 
 
 	public void vincularProdutosContaCorrente(PessoaContaCorrenteDTO pessoaContaCorrente) {
 
