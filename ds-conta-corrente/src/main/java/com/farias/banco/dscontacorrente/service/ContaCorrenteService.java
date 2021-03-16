@@ -1,5 +1,6 @@
 package com.farias.banco.dscontacorrente.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.farias.banco.dscontacorrente.builder.ContaCorrenteBuilder;
 import com.farias.banco.dscontacorrente.config.AppConfig;
+import com.farias.banco.dscontacorrente.dto.ContaCorrenteDTO;
+import com.farias.banco.dscontacorrente.dto.ContaCorrenteProdutoDTO;
 import com.farias.banco.dscontacorrente.dto.PessoaContaCorrenteDTO;
 import com.farias.banco.dscontacorrente.feignclients.ContaCorrenteProdutosFeignClients;
 import com.farias.banco.dscontacorrente.model.ContaCorrente;
@@ -55,4 +58,15 @@ public class ContaCorrenteService {
 		return conta;
 	}
 
+	public List<ContaCorrenteDTO> searchContaCorrentePorPessoa(Long pessoaId) {
+		List<ContaCorrenteDTO> contaCorrenteList = new ArrayList<>();
+		List<ContaCorrente> contasCorrente = repository.findByPessoa(pessoaId);
+		
+		for (ContaCorrente contaCorrente : contasCorrente) {
+			List<ContaCorrenteProdutoDTO> produtos = contaCorrenteProdutosFeignClients.contaCorrenteProdutos(contaCorrente.getId()).getBody();
+			contaCorrenteList.add(new ContaCorrenteDTO(contaCorrente.getAgencia(), contaCorrente.getNumero(), contaCorrente.getTipo().name(), produtos));
+		}
+		
+		return contaCorrenteList;
+	}
 }

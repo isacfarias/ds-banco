@@ -9,12 +9,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.farias.banco.dscontacorrenteprodutos.dto.ProdutosDTO;
+import com.farias.banco.dscontacorrenteprodutos.model.ProdutoTipo;
+
+
 
 @Component
-@FeignClient(name = "ds-produtos", path = "/produtosfaixa" )
-public interface ProdutosFaixaFeignClient {
+@FeignClient(name = "ds-produtos", path = "/" )
+public interface ProdutosFeignClient {
 	
-	@GetMapping("/score/{score}")
+	@GetMapping("produtosfaixa/score/{score}")
 	ResponseEntity<List<ProdutosDTO>> produtosPorScore(@PathVariable Integer score);
+	
+	@GetMapping("produtos/{id}")
+	ResponseEntity<ProdutoTipo> produto(@PathVariable Integer id);
 
 }

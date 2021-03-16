@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.farias.banco.dscontacorrente.dto.ContaCorrenteDTO;
 import com.farias.banco.dscontacorrente.model.ContaCorrente;
 import com.farias.banco.dscontacorrente.model.Pessoa;
 import com.farias.banco.dscontacorrente.repository.ContaCorrenteRepository;
@@ -32,10 +33,12 @@ public class ContaCorrenteResource {
 		return ResponseEntity.ok(contaCorrente);
 	}
 	
-	@GetMapping("/pessoa/{id}")
-	public ResponseEntity<List<ContaCorrente>> contasCorrente(@PathVariable Long id) {
-		List<ContaCorrente> list = repository.findByPessoa(id);
-		return ResponseEntity.ok(list);
+	@GetMapping("/pessoa/{pessoaId}")
+	public ResponseEntity<List<ContaCorrenteDTO>> contasCorrente(@PathVariable() Long pessoaId) {
+		
+		List<ContaCorrenteDTO> contaCorrenteComProdutos = service.searchContaCorrentePorPessoa(pessoaId);
+	
+		return ResponseEntity.ok(contaCorrenteComProdutos);
 	}
 	
 }
