@@ -10,11 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.farias.banco.dspessoa.feignclients.ContaCorrenteFeignClients;
 import com.farias.banco.dspessoa.model.Pessoa;
 import com.farias.banco.dspessoa.repository.PessoaRepository;
-import com.farias.banco.dspessoa.service.PessoaService;
 
 /**
  * 
@@ -25,6 +25,7 @@ import com.farias.banco.dspessoa.service.PessoaService;
  *
  */
 
+@ActiveProfiles("test")
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class PessoaServiceTest {
 
