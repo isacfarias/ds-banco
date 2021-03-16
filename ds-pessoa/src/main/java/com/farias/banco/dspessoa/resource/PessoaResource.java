@@ -30,7 +30,7 @@ public class PessoaResource {
 	@GetMapping
 	public ResponseEntity<List<Pessoa>> pessoas() {
 		List<Pessoa> pessoas = repository.findAll();
-		return ResponseEntity.ok(pessoas);
+		return !pessoas.isEmpty() ? ResponseEntity.ok(pessoas) : ResponseEntity.noContent().build();
 	}
 	
 	@PostMapping
