@@ -1,7 +1,6 @@
 package com.farias.banco.dsprodutos.resources;
 
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,31 +13,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.farias.banco.dsprodutos.dto.ProdutosDTO;
-import com.farias.banco.dsprodutos.model.ProdutoScore;
-import com.farias.banco.dsprodutos.repository.ProdutosScoreRepository;
+import com.farias.banco.dsprodutos.model.ProdutoFaixa;
+import com.farias.banco.dsprodutos.repository.ProdutosFaixaRepository;
 
 @RestController
-@RequestMapping(value = "/produtosscore")
-public class ProdutosScoreResource {
+@RequestMapping(value = "/produtosfaixa")
+public class ProdutosFaixaResource {
 	
 	@Autowired
-	private ProdutosScoreRepository repository;
+	private ProdutosFaixaRepository repository;
 
 	@GetMapping
-	public ResponseEntity<List<ProdutoScore>> produtosScore() {
-		List<ProdutoScore> produtosScore = repository.findAll();
+	public ResponseEntity<List<ProdutoFaixa>> produtosScore() {
+		List<ProdutoFaixa> produtosScore = repository.findAll();
 		return ResponseEntity.ok(produtosScore);		
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<ProdutoScore> produto(@PathVariable Integer id) {
-		ProdutoScore produtoScore = repository.findById(id).get();
+	public ResponseEntity<ProdutoFaixa> produto(@PathVariable Integer id) {
+		ProdutoFaixa produtoScore = repository.findById(id).get();
 		return ResponseEntity.ok(produtoScore);		
 	}
 	
 	@PostMapping
-	public ResponseEntity<ProdutoScore> cadastrarProdutos(@RequestBody ProdutoScore produtoScore) {
-		ProdutoScore temp = repository.save(produtoScore);		
+	public ResponseEntity<ProdutoFaixa> cadastrarProdutos(@RequestBody ProdutoFaixa produtoScore) {
+		ProdutoFaixa temp = repository.save(produtoScore);		
 		return ResponseEntity.ok(temp);
 	}
 	

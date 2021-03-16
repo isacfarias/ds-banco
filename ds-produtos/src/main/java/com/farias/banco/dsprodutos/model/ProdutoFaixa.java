@@ -19,25 +19,25 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "produtoscore")
-public class ProdutoScore {
+@Table(name = "produtofaixa")
+public class ProdutoFaixa {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "pros_id")
+	@Column(name = "prof_id")
 	private Integer id;
 	
 	@ManyToOne
 	@JoinColumn(name = "prodt_id")
 	private ProdutoTipo produtoTipo;
 	
-	@Column(name = "pros_scoremin")
+	@Column(name = "prof_scoremin")
 	private Integer scoreMin;
 	
-	@Column(name = "pros_scoremax")
+	@Column(name = "prof_scoremax")
 	private Integer scoreMax;
 	
-	@Column(name = "pros_valor")
+	@Column(name = "prof_valor")
 	private BigDecimal valor;
 
 }
