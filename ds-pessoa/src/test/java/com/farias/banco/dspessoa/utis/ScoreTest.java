@@ -1,6 +1,6 @@
 package com.farias.banco.dspessoa.utis;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import com.farias.banco.dspessoa.utils.ScoreUtils;
 
