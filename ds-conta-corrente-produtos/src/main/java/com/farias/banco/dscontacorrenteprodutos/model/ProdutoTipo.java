@@ -10,8 +10,5 @@ import lombok.NoArgsConstructor;
 public class ProdutoTipo {
 	
 	private Integer id;
-	
 	private String descricao;
-	
-
 }

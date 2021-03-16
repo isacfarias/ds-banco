@@ -38,6 +38,4 @@ public class ProdutosResource {
 		ProdutoTipo temp = repository.save(produtoTipo);
 		return ResponseEntity.ok(temp);		
 	}
-	
 }
-

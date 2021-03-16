@@ -21,9 +21,6 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "contacorrente")
 public class ContaCorrente implements Serializable {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@Id

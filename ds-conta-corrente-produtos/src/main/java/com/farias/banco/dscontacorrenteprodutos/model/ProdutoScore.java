@@ -12,13 +12,8 @@ import lombok.NoArgsConstructor;
 public class ProdutoScore {
 	
 	private Integer id;
-	
 	private Integer produtoTipo;
-	
 	private Integer scoreMin;
-	
 	private Integer scoreMax;
-	
 	private BigDecimal valor;
-
 }

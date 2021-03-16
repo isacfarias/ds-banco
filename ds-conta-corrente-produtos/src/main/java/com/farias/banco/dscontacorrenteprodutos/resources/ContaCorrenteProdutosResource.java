@@ -33,6 +33,5 @@ public class ContaCorrenteProdutosResource {
 		List<ContaCorrenteProdutoDTO> produtos = service.searchProdutosContaCorrente(contaCorrenteId);
 		return ResponseEntity.ok(produtos);
 	}
-	
 
 }

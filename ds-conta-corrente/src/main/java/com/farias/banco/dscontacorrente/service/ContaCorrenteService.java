@@ -59,14 +59,21 @@ public class ContaCorrenteService {
 	}
 
 	public List<ContaCorrenteDTO> searchContaCorrentePorPessoa(Long pessoaId) {
-		List<ContaCorrenteDTO> contaCorrenteList = new ArrayList<>();
 		List<ContaCorrente> contasCorrente = repository.findByPessoa(pessoaId);
-		
+		return contaCorrenteProdutos(contasCorrente);
+	}
+	
+	public List<ContaCorrenteDTO> contaCorrenteProdutos() {
+		List<ContaCorrente> contasCorrente = repository.findAll();
+		return contaCorrenteProdutos(contasCorrente);
+	}
+
+	private List<ContaCorrenteDTO> contaCorrenteProdutos(List<ContaCorrente> contasCorrente) {
+		List<ContaCorrenteDTO> contaCorrenteList = new ArrayList<>();
 		for (ContaCorrente contaCorrente : contasCorrente) {
 			List<ContaCorrenteProdutoDTO> produtos = contaCorrenteProdutosFeignClients.contaCorrenteProdutos(contaCorrente.getId()).getBody();
 			contaCorrenteList.add(new ContaCorrenteDTO(contaCorrente.getAgencia(), contaCorrente.getNumero(), contaCorrente.getTipo().name(), produtos));
 		}
-		
 		return contaCorrenteList;
 	}
 }

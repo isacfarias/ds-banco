@@ -38,6 +38,4 @@ public class PessoaResource {
 		Pessoa pes = service.cadastrarPessoa(pessoa);
 		return ResponseEntity.ok(pes);
 	}
-	
-
 }

@@ -26,19 +26,23 @@ public class ContaCorrenteResource {
 	
 	@Autowired
 	private ContaCorrenteRepository repository;
+
+	@GetMapping()
+	public ResponseEntity<List<ContaCorrenteDTO>> contasCorrente() {
+		List<ContaCorrenteDTO> contaCorrenteComProdutos = service.contaCorrenteProdutos();
+		return ResponseEntity.ok(contaCorrenteComProdutos);
+	}
+	
+	@GetMapping("/pessoa/{pessoaId}")
+	public ResponseEntity<List<ContaCorrenteDTO>> contasCorrente(@PathVariable() Long pessoaId) {
+		List<ContaCorrenteDTO> contaCorrenteComProdutos = service.searchContaCorrentePorPessoa(pessoaId);
+		return ResponseEntity.ok(contaCorrenteComProdutos);
+	}
 	
 	@PostMapping
 	public ResponseEntity<ContaCorrente> cadastarContaCorrente(@RequestBody Pessoa pessoa) {
 		ContaCorrente contaCorrente = service.cadastrarContaCorrente(pessoa);
 		return ResponseEntity.ok(contaCorrente);
-	}
-	
-	@GetMapping("/pessoa/{pessoaId}")
-	public ResponseEntity<List<ContaCorrenteDTO>> contasCorrente(@PathVariable() Long pessoaId) {
-		
-		List<ContaCorrenteDTO> contaCorrenteComProdutos = service.searchContaCorrentePorPessoa(pessoaId);
-	
-		return ResponseEntity.ok(contaCorrenteComProdutos);
 	}
 	
 }
