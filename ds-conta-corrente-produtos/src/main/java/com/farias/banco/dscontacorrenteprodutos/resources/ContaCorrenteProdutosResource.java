@@ -31,7 +31,7 @@ public class ContaCorrenteProdutosResource {
 	@GetMapping("/contacorrente/{contaCorrenteId}")
 	public ResponseEntity<List<ContaCorrenteProdutoDTO>> contaCorrenteProdutos(@PathVariable Long contaCorrenteId) {
 		List<ContaCorrenteProdutoDTO> produtos = service.searchProdutosContaCorrente(contaCorrenteId);
-		return ResponseEntity.ok(produtos);
+		return !produtos.isEmpty() ? ResponseEntity.ok(produtos) : ResponseEntity.notFound().build();
 	}
 
 }
