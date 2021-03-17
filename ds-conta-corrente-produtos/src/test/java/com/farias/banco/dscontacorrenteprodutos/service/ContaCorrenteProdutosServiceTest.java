@@ -23,7 +23,6 @@ import com.farias.banco.dscontacorrenteprodutos.repository.ContaCorrenteProdutos
 
 
 
-@TestMethodOrder(OrderAnnotation.class)
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class ContaCorrenteProdutosServiceTest {
