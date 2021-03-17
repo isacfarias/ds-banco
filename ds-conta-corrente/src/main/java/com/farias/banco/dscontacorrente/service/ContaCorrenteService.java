@@ -48,7 +48,7 @@ public class ContaCorrenteService {
 		try {
 			contaCorrenteProdutosFeignClients.vincularProdutosContaCorrente(new PessoaContaCorrenteDTO(pessoa.getId(), contacorrente.getId(), pessoa.getScore()));
 		} catch (Exception e) {
-			LOG.error("O serviço [ds-conta-corrente-produtos] de vincular produtos esta Off.");
+			LOG.error("O serviço [ds-conta-corrente-produtos] de vincular produtos esta Off.", e.getMessage());
 		}
 
 		return contacorrente;
@@ -82,7 +82,7 @@ public class ContaCorrenteService {
 				List<ContaCorrenteProdutoDTO> produtos = contaCorrenteProdutosFeignClients.contaCorrenteProdutos(contaCorrente.getId()).getBody();
 				contaCorrenteList.add(new ContaCorrenteDTO(contaCorrente.getAgencia(), contaCorrente.getNumero(), contaCorrente.getTipo().name(), produtos));
 			} catch (Exception e) {
-				LOG.error("");
+				LOG.error("O serviço [ds-conta-corrente-produtos] listar produtos vinculados a conta corrente não está respondendo.", e.getMessage());
 			}
 		}
 		return contaCorrenteList;

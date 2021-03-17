@@ -36,7 +36,7 @@ public class PessoaService {
 		try {
 			contaCorrenteFeignClients.cadastarContaCorrente(temp);
 		} catch (Exception e) {
-			LOG.error("Erro ao conectar no Serviço de abertura de conta corrente");
+			LOG.error("Erro ao conectar no Serviço [ds-conta-corrente] de abertura de conta corrente", e.getMessage() );
 		}
 		
 		return pessoa;

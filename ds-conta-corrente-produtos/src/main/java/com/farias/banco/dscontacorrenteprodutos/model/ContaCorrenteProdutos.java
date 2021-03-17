@@ -25,6 +25,9 @@ public class ContaCorrenteProdutos {
 	@Column(name = "ccop_id")
 	private Long id;
 	
+	@Column(name = "prodt_ativo")
+	private Integer ativo;
+	
 	@Column(name = "cco_id")
 	private Long contaCorrente;
 	

@@ -1,5 +1,6 @@
 package com.farias.banco.dscontacorrenteprodutos.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -8,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.farias.banco.dscontacorrenteprodutos.contants.ContaCorrenteConstants;
 import com.farias.banco.dscontacorrenteprodutos.dto.ContaCorrenteProdutoDTO;
 import com.farias.banco.dscontacorrenteprodutos.dto.PessoaContaCorrenteDTO;
 import com.farias.banco.dscontacorrenteprodutos.dto.ProdutosDTO;
@@ -33,15 +35,18 @@ public class ContaCorrenteProdutosService {
 		try {
 			produtos = produtosScoreFeignClient.produtosPorScore(pessoaContaCorrente.getScore()).getBody();
 		} catch (Exception e) {
-			LOG.error("O serviço [ds-produtos] de produtos esta Off.");
+			LOG.error("O serviço [ds-produtos] de produtos esta Off.", e.getMessage());
 		}
 
 		ContaCorrenteProdutos contaCorrenteProdutos;
 		for (ProdutosDTO produto : produtos) {
 
+			if (produto.getProduto().equals(ContaCorrenteConstants.PROD_CARTAO_CREDITO)) continue;
+			
 			contaCorrenteProdutos = new ContaCorrenteProdutos();
 			contaCorrenteProdutos.setContaCorrente(pessoaContaCorrente.getContaCorrente());
 			contaCorrenteProdutos.setProdutoTipo(produto.getProduto());
+			contaCorrenteProdutos.setAtivo( ( produto.getValor().compareTo(new BigDecimal(0.0)) == 1 ? 1: 0 ) );
 			contaCorrenteProdutos.setValor(produto.getValor());
 
 			repository.save(contaCorrenteProdutos);
@@ -56,7 +61,7 @@ public class ContaCorrenteProdutosService {
 					.map(contaCorrenteProduto -> new ContaCorrenteProdutoDTO(produtosScoreFeignClient.produto(contaCorrenteProduto.getProdutoTipo()).getBody().getDescricao(), contaCorrenteProduto.getValor()))
 					.collect(Collectors.toList());
 		} catch (Exception e) {
-			LOG.error("O serviço [ds-produtos] de produtos esta Off.");
+			LOG.error("O serviço [ds-produtos] de produtos esta Off.", e.getMessage());
 		}
 
 		return contaCorrenteprodutos;
