@@ -25,7 +25,7 @@ public class ProdutosResource {
 	@GetMapping
 	public ResponseEntity<List<ProdutoTipo>> produtos() {
 		List<ProdutoTipo> produtosTipo = repository.findAll();
-		return !produtosTipo.isEmpty() ? ResponseEntity.ok(produtosTipo) : ResponseEntity.noContent().build();		
+		return !produtosTipo.isEmpty() ? ResponseEntity.ok(produtosTipo) : ResponseEntity.notFound().build();		
 	}
 	
 	@GetMapping("/{id}")

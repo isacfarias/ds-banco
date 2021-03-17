@@ -26,7 +26,7 @@ public class ContaCorrenteResource {
 	@GetMapping()
 	public ResponseEntity<List<ContaCorrenteDTO>> contasCorrente() {
 		List<ContaCorrenteDTO> contaCorrenteComProdutos = service.contaCorrenteProdutos();
-		return !contaCorrenteComProdutos.isEmpty() ? ResponseEntity.ok(contaCorrenteComProdutos) : ResponseEntity.noContent().build();
+		return !contaCorrenteComProdutos.isEmpty() ? ResponseEntity.ok(contaCorrenteComProdutos) : ResponseEntity.notFound().build();
 	}
 
 	@GetMapping("/pessoa/{pessoaId}")

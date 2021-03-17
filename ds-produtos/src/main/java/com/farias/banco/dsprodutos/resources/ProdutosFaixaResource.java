@@ -1,6 +1,7 @@
 package com.farias.banco.dsprodutos.resources;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +27,13 @@ public class ProdutosFaixaResource {
 	@GetMapping
 	public ResponseEntity<List<ProdutoFaixa>> produtosScore() {
 		List<ProdutoFaixa> produtosScore = repository.findAll();
-		return ResponseEntity.ok(produtosScore);		
+		return !produtosScore.isEmpty() ? ResponseEntity.ok(produtosScore) : ResponseEntity.notFound().build();		
 	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<ProdutoFaixa> produto(@PathVariable Integer id) {
-		ProdutoFaixa produtoScore = repository.findById(id).get();
-		return ResponseEntity.ok(produtoScore);		
+		Optional<ProdutoFaixa> produtoScore = repository.findById(id);
+		return produtoScore.isPresent() ? ResponseEntity.ok(produtoScore.get()) : ResponseEntity.notFound().build();			
 	}
 	
 	@PostMapping
@@ -47,8 +48,7 @@ public class ProdutosFaixaResource {
 				                               .stream()
 				                               .map( produtosScore -> new ProdutosDTO(produtosScore.getProdutoTipo().getId(), produtosScore.getValor()))
 				                               .collect(Collectors.toList());
-		return ResponseEntity.ok(produtos);		
+		
+		return !produtos.isEmpty() ? ResponseEntity.ok(produtos) : ResponseEntity.notFound().build();		
 	}
-	
 }
-

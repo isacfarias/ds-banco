@@ -1,4 +1,4 @@
-package com.farias.banco.dscontacorrenteprodutos.resources;
+ package com.farias.banco.dscontacorrenteprodutos.resources;
 
 import java.util.List;
 
