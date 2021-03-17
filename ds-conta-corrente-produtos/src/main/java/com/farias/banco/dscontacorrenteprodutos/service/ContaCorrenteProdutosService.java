@@ -41,7 +41,8 @@ public class ContaCorrenteProdutosService {
 		ContaCorrenteProdutos contaCorrenteProdutos;
 		for (ProdutosDTO produto : produtos) {
 
-			if (produto.getProduto().equals(ContaCorrenteConstants.PROD_CARTAO_CREDITO)) continue;
+			if (produto.getProduto().equals(ContaCorrenteConstants.PROD_CARTAO_CREDITO)
+					&& produto.getValor().compareTo(new BigDecimal(0.0)) <= 0 ) continue;
 			
 			contaCorrenteProdutos = new ContaCorrenteProdutos();
 			contaCorrenteProdutos.setContaCorrente(pessoaContaCorrente.getContaCorrente());
