@@ -1,6 +1,7 @@
 package com.farias.banco.dsprodutos.resources;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,13 +25,13 @@ public class ProdutosResource {
 	@GetMapping
 	public ResponseEntity<List<ProdutoTipo>> produtos() {
 		List<ProdutoTipo> produtosTipo = repository.findAll();
-		return ResponseEntity.ok(produtosTipo);		
+		return !produtosTipo.isEmpty() ? ResponseEntity.ok(produtosTipo) : ResponseEntity.noContent().build();		
 	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<ProdutoTipo> produto(@PathVariable Integer id) {
-		ProdutoTipo produtosTipo = repository.findById(id).get();
-		return ResponseEntity.ok(produtosTipo);		
+		Optional<ProdutoTipo> produtosTipo = repository.findById(id);
+		return produtosTipo.isPresent() ? ResponseEntity.ok(produtosTipo.get()) : ResponseEntity.notFound().build();		
 	}
 	
 	@PostMapping
