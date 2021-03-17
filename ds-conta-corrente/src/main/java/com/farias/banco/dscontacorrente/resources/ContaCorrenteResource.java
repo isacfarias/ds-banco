@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.farias.banco.dscontacorrente.dto.ContaCorrenteDTO;
 import com.farias.banco.dscontacorrente.model.ContaCorrente;
 import com.farias.banco.dscontacorrente.model.Pessoa;
-import com.farias.banco.dscontacorrente.repository.ContaCorrenteRepository;
 import com.farias.banco.dscontacorrente.service.ContaCorrenteService;
 
 @RestController
@@ -23,26 +22,23 @@ public class ContaCorrenteResource {
 
 	@Autowired
 	private ContaCorrenteService service;
-	
-	@Autowired
-	private ContaCorrenteRepository repository;
 
 	@GetMapping()
 	public ResponseEntity<List<ContaCorrenteDTO>> contasCorrente() {
 		List<ContaCorrenteDTO> contaCorrenteComProdutos = service.contaCorrenteProdutos();
-		return ResponseEntity.ok(contaCorrenteComProdutos);
+		return !contaCorrenteComProdutos.isEmpty() ? ResponseEntity.ok(contaCorrenteComProdutos) : ResponseEntity.noContent().build();
 	}
-	
+
 	@GetMapping("/pessoa/{pessoaId}")
 	public ResponseEntity<List<ContaCorrenteDTO>> contasCorrente(@PathVariable() Long pessoaId) {
 		List<ContaCorrenteDTO> contaCorrenteComProdutos = service.searchContaCorrentePorPessoa(pessoaId);
-		return ResponseEntity.ok(contaCorrenteComProdutos);
+		return !contaCorrenteComProdutos.isEmpty() ? ResponseEntity.ok(contaCorrenteComProdutos) : ResponseEntity.notFound().build();
 	}
-	
+
 	@PostMapping
 	public ResponseEntity<ContaCorrente> cadastarContaCorrente(@RequestBody Pessoa pessoa) {
 		ContaCorrente contaCorrente = service.cadastrarContaCorrente(pessoa);
 		return ResponseEntity.ok(contaCorrente);
 	}
-	
+
 }
