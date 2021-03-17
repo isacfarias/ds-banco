@@ -3,6 +3,8 @@ package com.farias.banco.dscontacorrenteprodutos.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,22 +18,27 @@ import com.farias.banco.dscontacorrenteprodutos.repository.ContaCorrenteProdutos
 @Service
 public class ContaCorrenteProdutosService {
 
+	private final Logger LOG = LoggerFactory.getLogger(ContaCorrenteProdutosService.class);
+
 	@Autowired
 	private ContaCorrenteProdutosRepository repository;
 
 	@Autowired
 	private ProdutosFeignClient produtosScoreFeignClient;
-	
+
 
 	public void vincularProdutosContaCorrente(PessoaContaCorrenteDTO pessoaContaCorrente) {
-
-		List<ProdutosDTO> produtos = produtosScoreFeignClient.produtosPorScore(pessoaContaCorrente.getScore()).getBody();
-
-		if (produtos.isEmpty()) return;
+		List<ProdutosDTO> produtos = null;
+		
+		try {
+			produtos = produtosScoreFeignClient.produtosPorScore(pessoaContaCorrente.getScore()).getBody();
+		} catch (Exception e) {
+			LOG.error("O serviço [ds-produtos] de produtos esta Off.");
+		}
 
 		ContaCorrenteProdutos contaCorrenteProdutos;
 		for (ProdutosDTO produto : produtos) {
-			
+
 			contaCorrenteProdutos = new ContaCorrenteProdutos();
 			contaCorrenteProdutos.setContaCorrente(pessoaContaCorrente.getContaCorrente());
 			contaCorrenteProdutos.setProdutoTipo(produto.getProduto());
@@ -42,14 +49,16 @@ public class ContaCorrenteProdutosService {
 	}
 
 	public List<ContaCorrenteProdutoDTO> searchProdutosContaCorrente(Long contaCorrenteId) {
-		
+		List<ContaCorrenteProdutoDTO> contaCorrenteprodutos = null;
 		List<ContaCorrenteProdutos> produtos = repository.findByContaCorrente(contaCorrenteId);
-		
-		List<ContaCorrenteProdutoDTO> contaCorrenteprodutos = produtos
-				 .stream()
-				 .map(contaCorrenteProduto -> new ContaCorrenteProdutoDTO(produtosScoreFeignClient.produto(contaCorrenteProduto.getProdutoTipo()).getBody().getDescricao(), contaCorrenteProduto.getValor()))
-				 .collect(Collectors.toList());
-		
+		try {
+			contaCorrenteprodutos = produtos.stream()
+					.map(contaCorrenteProduto -> new ContaCorrenteProdutoDTO(produtosScoreFeignClient.produto(contaCorrenteProduto.getProdutoTipo()).getBody().getDescricao(), contaCorrenteProduto.getValor()))
+					.collect(Collectors.toList());
+		} catch (Exception e) {
+			LOG.error("O serviço [ds-produtos] de produtos esta Off.");
+		}
+
 		return contaCorrenteprodutos;
 	}
 }

@@ -14,13 +14,13 @@ import com.farias.banco.dscontacorrenteprodutos.model.ProdutoTipo;
 
 
 @Component
-@FeignClient(name = "ds-produtos", path = "/" )
+@FeignClient(name = "ds-produtos" )
 public interface ProdutosFeignClient {
 	
-	@GetMapping("produtosfaixa/score/{score}")
+	@GetMapping("/produtosfaixa/score/{score}")
 	ResponseEntity<List<ProdutosDTO>> produtosPorScore(@PathVariable Integer score);
 	
-	@GetMapping("produtos/{id}")
+	@GetMapping("/produtos/{id}")
 	ResponseEntity<ProdutoTipo> produto(@PathVariable Integer id);
 
 }
