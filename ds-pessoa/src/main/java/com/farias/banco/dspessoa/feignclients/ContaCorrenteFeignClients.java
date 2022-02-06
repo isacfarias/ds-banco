@@ -6,11 +6,12 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.farias.banco.dspessoa.builder.FeignConfiguration;
 import com.farias.banco.dspessoa.model.ContaCorrente;
 import com.farias.banco.dspessoa.model.Pessoa;
 
 @Component
-@FeignClient(name="ds-conta-corrente", path = "/contacorrente")
+@FeignClient(name="ds-conta-corrente", path = "/contacorrente", configuration = FeignConfiguration.class)
 public interface ContaCorrenteFeignClients {
 
 	@PostMapping

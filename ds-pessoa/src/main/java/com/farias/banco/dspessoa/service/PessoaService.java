@@ -2,28 +2,27 @@ package com.farias.banco.dspessoa.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.farias.banco.dspessoa.broker.outbound.ContaCorrenteBrokerOutbound;
 import com.farias.banco.dspessoa.builder.PessoaBuilder;
 import com.farias.banco.dspessoa.feignclients.ContaCorrenteFeignClients;
 import com.farias.banco.dspessoa.model.Pessoa;
 import com.farias.banco.dspessoa.repository.PessoaRepository;
 import com.farias.banco.dspessoa.utils.ScoreUtils;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class PessoaService {
 	
 	private final Logger LOG = LoggerFactory.getLogger(PessoaService.class);
 	
-	@Autowired
-	private PessoaRepository repository;
-	
-	@Autowired
-	private ContaCorrenteFeignClients contaCorrenteFeignClients;
-	
-	@Autowired
-	private ScoreUtils scoreUtils;
+	private final PessoaRepository repository;
+	private final ContaCorrenteFeignClients contaCorrenteFeignClients;
+	private final ScoreUtils scoreUtils;
+	private final ContaCorrenteBrokerOutbound brokerOutbound;
 	
 	public Pessoa cadastrarPessoa(Pessoa pessoa) {
 		
@@ -31,10 +30,11 @@ public class PessoaService {
 				.pessoa(pessoa)
 				.score(scoreUtils)
 				.builder();
-		temp = repository.save(temp);
+
+		repository.save(temp);
 
 		try {
-			contaCorrenteFeignClients.cadastarContaCorrente(temp);
+			brokerOutbound.contaCorrentePublish(pessoa);
 		} catch (Exception e) {
 			LOG.error("Erro ao conectar no Serviço [ds-conta-corrente] de abertura de conta corrente", e.getMessage() );
 		}
