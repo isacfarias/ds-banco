@@ -1,4 +1,4 @@
-package com.farias.banco.dspessoa.builder;
+package com.farias.banco.dscontacorrente.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

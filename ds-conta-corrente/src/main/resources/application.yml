@@ -1,0 +1,66 @@
+server:
+  port: ${PORT:8081}
+  
+spring:
+  application:
+    name: ds-conta-corrente
+  profiles:
+    active: test
+  rabbitmq:
+    addresses: localhost:5672
+    username: ds-banco
+    password: ABC_BANCO
+    virtualhost: /
+    
+  cloud:
+    stream:
+      binders:
+        rabbitMQ:
+          type: rabbit
+
+      bindings:
+        springcloudbusinput:
+          destination: springCloudBus
+          group: q-cloudbus-ds-conta-corrente
+                
+        subscribeContaCorrenteCreated:
+          destination: x-conta-corrente-created
+          group: q-conta-corrente-created
+          consumer:
+            maxAttempts: 1
+
+        publishContaCorrenteProcessed:
+          destination: x-conta-corrente-processed
+          
+        publishProdutosContaCorrenteCreated:
+          destination: x-produtos-conta-corrente-created
+
+      rabbit:
+        bindings:
+          subscribeContaCorrenteCreated:
+            consumer:
+              exchangeType: fanout
+              autoBindDlq: true
+              republishToDlq: true
+              requeueRejected: false
+              
+
+          publishContaCorrenteProcessed:
+            producer:
+              exchangeType: fanout
+              
+          publishProdutosContaCorrenteCreated:
+            producer:
+              exchangeType: fanout              
+
+
+  jpa:
+    open-in-view: false
+
+#eureka.instance.instance-id=${spring.application.name}:${spring.application.instance_id:${random.value}}
+#eureka.client.service-url.defaultZone=http://localhost:8761/eureka
+#
+#hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds=60000
+#ribbon.ConnectTimeout=10000
+#ribbon.ReadTimeout=20000
+#banco.agencia.numero=${AGENCIA_NUMERO:3271}

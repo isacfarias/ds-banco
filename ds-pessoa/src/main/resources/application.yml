@@ -4,11 +4,11 @@ spring:
   profiles:
     active: test
   rabbitmq:
-    host: localhost
-    port: 5672
+    addresses: localhost:5672
     username: ds-banco
     password: ABC_BANCO
     virtualhost: /
+    
   cloud:
 
     stream:

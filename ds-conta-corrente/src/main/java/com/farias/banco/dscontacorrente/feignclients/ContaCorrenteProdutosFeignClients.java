@@ -10,11 +10,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.farias.banco.dscontacorrente.config.FeignConfiguration;
 import com.farias.banco.dscontacorrente.dto.ContaCorrenteProdutoDTO;
 import com.farias.banco.dscontacorrente.dto.PessoaContaCorrenteDTO;
 
 @Component
-@FeignClient(name="ds-conta-corrente-produtos", path = "/contacorrenteprodutos")
+@FeignClient(name="ds-conta-corrente-produtos", path = "/contacorrenteprodutos", configuration = FeignConfiguration.class)
 public interface ContaCorrenteProdutosFeignClients {
 
 	@PostMapping

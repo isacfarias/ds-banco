@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 @Transactional
 @EnableBinding(BrokerOutput.class)
 @RequiredArgsConstructor
-public class ContaCorrenteBrokerOutbound {
+public class PessoaBrokerOutbound {
 
 	private final Logger LOG = LoggerFactory.getLogger(PessoaService.class);
 

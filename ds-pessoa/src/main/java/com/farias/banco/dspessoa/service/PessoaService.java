@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.farias.banco.dspessoa.broker.outbound.ContaCorrenteBrokerOutbound;
+import com.farias.banco.dspessoa.broker.outbound.PessoaBrokerOutbound;
 import com.farias.banco.dspessoa.builder.PessoaBuilder;
 import com.farias.banco.dspessoa.feignclients.ContaCorrenteFeignClients;
 import com.farias.banco.dspessoa.model.Pessoa;
@@ -22,7 +22,7 @@ public class PessoaService {
 	private final PessoaRepository repository;
 	private final ContaCorrenteFeignClients contaCorrenteFeignClients;
 	private final ScoreUtils scoreUtils;
-	private final ContaCorrenteBrokerOutbound brokerOutbound;
+	private final PessoaBrokerOutbound brokerOutbound;
 	
 	public Pessoa cadastrarPessoa(Pessoa pessoa) {
 		

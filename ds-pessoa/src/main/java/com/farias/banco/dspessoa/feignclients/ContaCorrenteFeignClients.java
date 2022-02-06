@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.farias.banco.dspessoa.builder.FeignConfiguration;
+import com.farias.banco.dspessoa.config.app.FeignConfiguration;
 import com.farias.banco.dspessoa.model.ContaCorrente;
 import com.farias.banco.dspessoa.model.Pessoa;
 

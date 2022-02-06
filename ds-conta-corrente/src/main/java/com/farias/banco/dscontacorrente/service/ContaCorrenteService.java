@@ -5,9 +5,9 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.farias.banco.dscontacorrente.broker.outbound.ContaCorrenteBrokerOutbound;
 import com.farias.banco.dscontacorrente.builder.ContaCorrenteBuilder;
 import com.farias.banco.dscontacorrente.config.AppConfig;
 import com.farias.banco.dscontacorrente.dto.ContaCorrenteDTO;
@@ -19,23 +19,20 @@ import com.farias.banco.dscontacorrente.model.Pessoa;
 import com.farias.banco.dscontacorrente.repository.ContaCorrenteRepository;
 import com.farias.banco.dscontacorrente.utils.ContaCorrenteNumeroUtils;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class ContaCorrenteService {
 
 	private final Logger LOG = LoggerFactory.getLogger(ContaCorrenteService.class);
 
-	@Autowired
-	private AppConfig config;
-
-	@Autowired
-	private ContaCorrenteRepository repository;
-
-	@Autowired
-	private ContaCorrenteProdutosFeignClients contaCorrenteProdutosFeignClients;
-
-	@Autowired
-	private ContaCorrenteNumeroUtils contaNumero;
-
+	private final AppConfig config;
+	private final ContaCorrenteRepository repository;
+	private final ContaCorrenteProdutosFeignClients contaCorrenteProdutosFeignClients;
+	private final ContaCorrenteNumeroUtils contaNumero;
+	private final ContaCorrenteBrokerOutbound outbound;
+	
 	public ContaCorrente cadastrarContaCorrente(Pessoa pessoa) {
 		ContaCorrente contacorrente = new ContaCorrenteBuilder()
 				.agencia(config.getAgencia().getNumero())
@@ -45,11 +42,7 @@ public class ContaCorrenteService {
 				.builder();
 
 		contacorrente = repository.save(contacorrente);
-		try {
-			contaCorrenteProdutosFeignClients.vincularProdutosContaCorrente(new PessoaContaCorrenteDTO(pessoa.getId(), contacorrente.getId(), pessoa.getScore()));
-		} catch (Exception e) {
-			LOG.error("O serviço [ds-conta-corrente-produtos] de vincular produtos esta Off.", e.getMessage());
-		}
+		outbound.vincularProdutosContaCorrentePublish(new PessoaContaCorrenteDTO(pessoa.getId(), contacorrente.getId(), pessoa.getScore()));
 
 		return contacorrente;
 	}
