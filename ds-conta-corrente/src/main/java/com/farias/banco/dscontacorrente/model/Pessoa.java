@@ -2,11 +2,18 @@ package com.farias.banco.dscontacorrente.model;
 
 import java.io.Serializable;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.farias.banco.dscontacorrente.enums.ContaTipo;
 
-@Data
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.With;
+
+@Getter
+@Builder
+@With
 @NoArgsConstructor
 @AllArgsConstructor
 public class Pessoa implements Serializable {
@@ -18,4 +25,5 @@ public class Pessoa implements Serializable {
 	private String cpfCnpj;
 	private Integer score;
 	private String tipo;
+	
 }

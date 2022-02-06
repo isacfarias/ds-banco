@@ -1,12 +1,12 @@
 package com.farias.banco.dscontacorrente.dto;
 
+import lombok.*;
+
 import java.math.BigDecimal;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-@Data
+@Getter
+@Builder
+@With
 @NoArgsConstructor
 @AllArgsConstructor
 public class ContaCorrenteProdutoDTO {

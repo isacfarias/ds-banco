@@ -1,4 +1,4 @@
-package com.farias.banco.dspessoa.excptionhandler.exception;
+package com.farias.banco.dspessoa.exceptionhandler.exception;
 
 public class PessoaExistenteException extends RuntimeException {
 

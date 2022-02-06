@@ -19,16 +19,26 @@ import lombok.RequiredArgsConstructor;
 public class ContaCorrenteBrokerOutbound {
 
 	private final Logger LOG = LoggerFactory.getLogger(ContaCorrenteBrokerOutbound.class);
+	private final String MESSAGE_ERROR = "Error ao publicar mensagem na exchange [{}]: [{}]";
 
 	private final BrokerOutput outbound;
 	private final ObjectMapper objectMapper;
 
-	public void vincularProdutosContaCorrentePublish(PessoaContaCorrenteDTO contaCorrente) {
+	public void vincularContaCorrentePublish(PessoaContaCorrenteDTO contaCorrente) {
 		try {
 			final var message = objectMapper.writeValueAsString(contaCorrente);
 			this.outbound.publishContaCorrenteCreated().send(MessageBuilder.withPayload(message).build());
 		} catch (Exception e) {
-			LOG.error("Error ao publicar mensagem na exchange [{}]: [{}]", BrokerConstants.EXCHANGE_PRODUTOS_CONTA_CORRENTE_CREATED, e.getMessage() );
+			LOG.error(MESSAGE_ERROR, BrokerConstants.EXCHANGE_CONTA_CORRENTE_CREATED, e.getMessage() );
+		}
+	}
+
+	public void vincularProdutosContaCorrentePublish(PessoaContaCorrenteDTO contaCorrente) {
+		try {
+			final var message = objectMapper.writeValueAsString(contaCorrente);
+			this.outbound.publishProdutosContaCorrenteCreated().send(MessageBuilder.withPayload(message).build());
+		} catch (Exception e) {
+			LOG.error(MESSAGE_ERROR, BrokerConstants.EXCHANGE_PRODUTOS_CONTA_CORRENTE_CREATED, e.getMessage() );
 		}
 	}
 	

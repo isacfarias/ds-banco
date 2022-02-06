@@ -18,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 @EnableBinding(BrokerInput.class)
 @RequiredArgsConstructor
 public class ContaCorrenteBrokerInboud {
-	
+
 	private final Logger LOG = LoggerFactory.getLogger(ContaCorrenteBrokerInboud.class);
 
 
@@ -29,11 +29,16 @@ public class ContaCorrenteBrokerInboud {
 	@StreamListener(target = BrokerConstants.EXCHANGE_CONTA_CORRENTE_CREATED)
 	public void contaCorrentePrecessed(String message) {
 		LOG.info("Mensagem recebida na fila [{}] - conteudo [{}]", BrokerConstants.Q_CONTA_CORRENTE_CREATED_ORIGE_NAME, message);
-		LOG.info("[Start] - cadastar conta corrente");
-		final var pessoa = mapper.convertValue(message, Pessoa.class);
-		service.cadastrarContaCorrente(pessoa);
-		LOG.info("[Stop] - cadastar conta corrente");
+		try {
+			LOG.info("[Start] - cadastar conta corrente");
+			final var pessoa = mapper.readValue(message, Pessoa.class);
+			service.cadastrarContaCorrente(pessoa);
+			LOG.info("[Stop] - cadastar conta corrente");	
+		} catch (Exception e) {
+			LOG.error(e.getMessage());
+		}
+
 	}
-	
+
 
 }

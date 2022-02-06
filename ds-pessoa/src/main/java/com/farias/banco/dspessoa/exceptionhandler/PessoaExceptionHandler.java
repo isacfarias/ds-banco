@@ -1,4 +1,4 @@
-package com.farias.banco.dspessoa.excptionhandler;
+package com.farias.banco.dspessoa.exceptionhandler;
 
 import java.util.Arrays;
 import java.util.List;

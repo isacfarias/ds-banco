@@ -10,10 +10,10 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableFeignClients
 @EnableEurekaClient
 @SpringBootApplication
-public class DsContaCorrenteProdutosApplication {
+public class App {
 
 	public static void main(String[] args) {
-		SpringApplication.run(DsContaCorrenteProdutosApplication.class, args);
+		SpringApplication.run(App.class, args);
 	}
 
 }

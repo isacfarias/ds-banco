@@ -1,17 +1,17 @@
 package com.farias.banco.dscontacorrente.dto;
 
+import lombok.*;
+
 import java.util.List;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-@Data
+@Getter
+@Builder
+@With
 @NoArgsConstructor
 @AllArgsConstructor
-public class ContaCorrenteDTO {
+public class ContaCorrenteDTOResponse {
 	
-	private Integer Agencia;
+	private Integer agencia;
 	private Integer numero;
 	private String tipo;
 	private List<ContaCorrenteProdutoDTO> produtos;

@@ -17,6 +17,7 @@
 	<properties>
 		<java.version>11</java.version>
 		<spring-cloud.version>2020.0.3</spring-cloud.version>
+		<lombok.version>1.18.22</lombok.version>
 	</properties>
 	<dependencies>
 
@@ -24,8 +25,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
-		<!-- <dependency> <groupId>org.springframework.cloud</groupId> <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId> </dependency> -->
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -39,11 +38,12 @@
 			<artifactId>spring-boot-configuration-processor</artifactId>
 			<optional>true</optional>
 		</dependency>
-
+		
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<optional>true</optional>
+			<version>${lombok.version}</version>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
@@ -74,7 +74,8 @@
 			<scope>runtime</scope>
 		</dependency>
 
-		<!-- <dependency> <groupId>org.springframework.cloud</groupId> <artifactId>spring-cloud-starter-netflix-hystrix</artifactId> </dependency> -->
+		<!-- <dependency> <groupId>org.springframework.cloud</groupId> <artifactId>spring-cloud-starter-netflix-hystrix</artifactId> 
+			</dependency> -->
 
 		<!-- rabbitMQ -->
 		<dependency>
@@ -107,8 +108,14 @@
 			<groupId>io.github.openfeign</groupId>
 			<artifactId>feign-httpclient</artifactId>
 		</dependency>
+
+		<!-- Eureka client -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+		</dependency>
+
 	</dependencies>
-	
 	<dependencyManagement>
 		<dependencies>
 			<dependency>

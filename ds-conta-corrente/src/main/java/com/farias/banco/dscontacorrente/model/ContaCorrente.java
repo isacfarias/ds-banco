@@ -12,12 +12,16 @@ import javax.persistence.Table;
 import com.farias.banco.dscontacorrente.enums.ContaTipo;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.With;
 
-@Data
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
+@With
 @Entity
 @Table(name = "contacorrente")
 public class ContaCorrente implements Serializable {

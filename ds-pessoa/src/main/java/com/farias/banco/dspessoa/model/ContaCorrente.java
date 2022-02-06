@@ -2,11 +2,11 @@ package com.farias.banco.dspessoa.model;
 
 import java.io.Serializable;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+@Getter
+@Builder
+@With
 @NoArgsConstructor
 @AllArgsConstructor
 public class ContaCorrente implements Serializable {

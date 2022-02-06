@@ -7,7 +7,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 @ActiveProfiles(profiles = "test")
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class DsPessoaApplicationTests {
+public class AppTests {
 
 	@Test
 	void contextLoads() {
