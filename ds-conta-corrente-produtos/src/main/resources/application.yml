@@ -1,0 +1,66 @@
+server:
+  port: ${PORT:0}
+  
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+      
+spring:
+  application:
+    name: ds-conta-corrente-produtos
+  profiles:
+    active: test
+  rabbitmq:
+    addresses: localhost:5672
+    username: ds-banco
+    password: ABC_BANCO
+    virtualhost: /
+    
+  cloud:
+    stream:
+      binders:
+        rabbitMQ:
+          type: rabbit
+
+      bindings:
+        springcloudbusinput:
+          destination: springCloudBus
+          group: q-cloudbus-ds-conta-corrente
+                
+        subscribeContaCorrenteCreated:
+          destination: x-conta-corrente-created
+          group: q-conta-corrente-created
+          consumer:
+            maxAttempts: 1
+
+        publishContaCorrenteProcessed:
+          destination: x-conta-corrente-processed
+          
+        publishProdutosContaCorrenteCreated:
+          destination: x-produtos-conta-corrente-created
+
+      rabbit:
+        bindings:
+          subscribeContaCorrenteCreated:
+            consumer:
+              exchangeType: fanout
+              autoBindDlq: true
+              republishToDlq: true
+              requeueRejected: false
+              
+
+          publishContaCorrenteProcessed:
+            producer:
+              exchangeType: fanout
+              
+          publishProdutosContaCorrenteCreated:
+            producer:
+              exchangeType: fanout              
+  jpa:
+    open-in-view: false
+    
+
+
