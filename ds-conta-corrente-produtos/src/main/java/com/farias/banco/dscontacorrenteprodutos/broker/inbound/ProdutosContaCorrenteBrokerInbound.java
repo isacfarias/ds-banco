@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 import com.farias.banco.dscontacorrenteprodutos.config.broker.BrokerInput;
 import com.farias.banco.dscontacorrenteprodutos.contants.BrokerConstants;
 import com.farias.banco.dscontacorrenteprodutos.dto.PessoaContaCorrenteDTO;
-import com.farias.banco.dscontacorrenteprodutos.model.Pessoa;
 import com.farias.banco.dscontacorrenteprodutos.service.ContaCorrenteProdutosService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
