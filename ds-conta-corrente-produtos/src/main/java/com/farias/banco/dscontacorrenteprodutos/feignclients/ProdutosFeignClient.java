@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import com.farias.banco.dscontacorrenteprodutos.dto.ProdutoTipoDTO;
 import com.farias.banco.dscontacorrenteprodutos.dto.ProdutosDTO;
-import com.farias.banco.dscontacorrenteprodutos.model.ProdutoTipo;
 
 
 
@@ -21,6 +21,6 @@ public interface ProdutosFeignClient {
 	ResponseEntity<List<ProdutosDTO>> produtosPorScore(@PathVariable Integer score);
 	
 	@GetMapping("/produtos/{id}")
-	ResponseEntity<ProdutoTipo> produto(@PathVariable Integer id);
+	ResponseEntity<ProdutoTipoDTO> produto(@PathVariable Integer id);
 
 }

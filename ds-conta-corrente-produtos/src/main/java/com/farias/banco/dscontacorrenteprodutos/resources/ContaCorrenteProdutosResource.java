@@ -23,7 +23,7 @@ public class ContaCorrenteProdutosResource {
 	private final ContaCorrenteProdutosService service;
 
 	@GetMapping
-	public Page<ContaCorrenteProdutoDTO> findAll(@RequestParam(required = false) Optional<Long> contaCorrenteId,
+	public Page<ContaCorrenteProdutoDTO> findAll(@RequestParam(required = false) Optional<Long> contaCorrenteProdutosId,
 			@RequestParam(required = false) Optional<Long> contaCorrente,
 			@RequestParam(required = false) Optional<Integer> ativo,
 			@RequestParam(required = false) Optional<Long> produtoTipo,
@@ -32,7 +32,7 @@ public class ContaCorrenteProdutosResource {
 			@RequestParam(defaultValue = "contaCorrente") String sort,
 			@RequestParam(defaultValue = "ASC") Sort.Direction direction) {
 		
-		return service.findAll(contaCorrenteId, contaCorrente, ativo, produtoTipo, PageRequest.of(page, size, Sort.by(direction, sort)));
+		return service.findAll(contaCorrenteProdutosId, contaCorrente, ativo, produtoTipo, PageRequest.of(page, size, Sort.by(direction, sort)));
 	}
 
 }

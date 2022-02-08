@@ -1,4 +1,4 @@
-package com.farias.banco.dscontacorrenteprodutos.model;
+package com.farias.banco.dscontacorrenteprodutos.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,7 +12,7 @@ import lombok.With;
 @With
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProdutoTipo {
+public class ProdutoTipoDTO {
 	
 	private Integer id;
 	private String descricao;

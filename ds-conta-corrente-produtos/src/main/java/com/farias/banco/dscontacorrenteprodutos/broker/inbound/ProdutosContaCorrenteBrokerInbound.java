@@ -22,7 +22,6 @@ public class ProdutosContaCorrenteBrokerInbound {
 	private final Logger LOG = LoggerFactory.getLogger(ProdutosContaCorrenteBrokerInbound.class);
 
 
-	private final BrokerInput input;
 	private final ObjectMapper mapper;
 	private final ContaCorrenteProdutosService service;
 	

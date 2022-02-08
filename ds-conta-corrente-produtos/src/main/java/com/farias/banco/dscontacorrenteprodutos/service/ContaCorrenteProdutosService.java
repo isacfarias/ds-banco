@@ -16,9 +16,9 @@ import org.springframework.stereotype.Service;
 
 import com.farias.banco.dscontacorrenteprodutos.dto.ContaCorrenteProdutoDTO;
 import com.farias.banco.dscontacorrenteprodutos.dto.PessoaContaCorrenteDTO;
+import com.farias.banco.dscontacorrenteprodutos.dto.ProdutoTipoDTO;
 import com.farias.banco.dscontacorrenteprodutos.feignclients.ProdutosFeignClient;
 import com.farias.banco.dscontacorrenteprodutos.model.ContaCorrenteProdutos;
-import com.farias.banco.dscontacorrenteprodutos.model.ProdutoTipo;
 import com.farias.banco.dscontacorrenteprodutos.repository.ContaCorrenteProdutosRepository;
 import com.farias.banco.dscontacorrenteprodutos.repository.specification.ContaCorrenteProdutosSpecification;
 
@@ -67,14 +67,14 @@ public class ContaCorrenteProdutosService {
 	}
 
 	public ContaCorrenteProdutoDTO buildDTO(ContaCorrenteProdutos contaCorrenteProdutos) {
-		ResponseEntity<ProdutoTipo> produtoTipo = null;
+		ResponseEntity<ProdutoTipoDTO> produtoTipo = null;
 		try {
 			produtoTipo = produtosScoreFeignClient.produto(contaCorrenteProdutos.getProdutoTipo());
 		} catch (Exception e) {
 			LOG.error("O serviço [ds-produtos] de produtos esta Off.", e.getMessage());
 		}
 		return ContaCorrenteProdutoDTO.builder()
-				.produto(Optional.of(produtoTipo.getBody()).map(ProdutoTipo::getDescricao).orElse("N/A"))
+				.produto(Optional.of(produtoTipo.getBody()).map(ProdutoTipoDTO::getDescricao).orElse("N/A"))
 				.limite(contaCorrenteProdutos.getValor())
 				.build();
 	}
