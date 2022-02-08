@@ -17,9 +17,9 @@ import lombok.RequiredArgsConstructor;
 @Component
 @EnableBinding(BrokerInput.class)
 @RequiredArgsConstructor
-public class ProdutosContaCorrenteBrokerInboud {
+public class ProdutosContaCorrenteBrokerInbound {
 
-	private final Logger LOG = LoggerFactory.getLogger(ProdutosContaCorrenteBrokerInboud.class);
+	private final Logger LOG = LoggerFactory.getLogger(ProdutosContaCorrenteBrokerInbound.class);
 
 
 	private final BrokerInput input;

@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.farias.banco.dspessoa.enums.StatusEnum;
+
 import lombok.*;
 
 @Getter
@@ -38,6 +40,12 @@ public class Pessoa implements Serializable {
 	
 	@Column(name = "pes_tipo")
 	private String tipo;
+	
+	@Column(name = "cc_status")
+	private StatusEnum statusContaCorrente;
+	
+	@Column(name = "cc_produtos_status")
+	private StatusEnum statusProdutos;
 	
 
 }

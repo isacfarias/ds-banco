@@ -14,7 +14,7 @@ import com.farias.banco.dscontacorrenteprodutos.model.ProdutoTipo;
 
 
 @Component
-@FeignClient(name = "ds-produtos" )
+@FeignClient(name = "ds-produtos")
 public interface ProdutosFeignClient {
 	
 	@GetMapping("/produtosfaixa/score/{score}")

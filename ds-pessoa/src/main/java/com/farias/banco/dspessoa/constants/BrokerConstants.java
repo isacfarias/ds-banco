@@ -5,14 +5,18 @@ public interface BrokerConstants {
 	/**
 	 * Nome das exchanges e queue usadas para ouvir
 	 */
-	public static final String EXCHAGE_CONTA_CORRENTE_CREATED_ORIGEM_NAME = "x-conta-corrente-created";
-	public static final String EXCHAGE_CONTA_CORRENTE_PROCESSED_ORIGEM_NAME = "x-conta-corrente-processed";
-	public static final String Q_CONTA_CORRENTE_PROCESSED_ORIGE_NAME = EXCHAGE_CONTA_CORRENTE_PROCESSED_ORIGEM_NAME +".q-conta-corrente-processed";
+	String EXCHANGE_CONTA_CORRENTE_CREATED_ORIGEM_NAME             = "x-conta-corrente-created";
+	String EXCHANGE_CONTA_CORRENTE_PROCESSED_ORIGEM_NAME           = "x-conta-corrente-processed";
+	String EXCHANGE_PRODUTOS_CONTA_CORRENTE_PROCESSED_ORIGEM_NAME  = "x-produtos-conta-corrente-processed";
+	
+	String Q_CONTA_CORRENTE_PROCESSED_ORIGE_NAME          = EXCHANGE_CONTA_CORRENTE_PROCESSED_ORIGEM_NAME +".q-conta-corrente-processed";
+	String Q_PRODUTOS_CONTA_CORRENTE_PROCESSED_ORIGE_NAME = EXCHANGE_PRODUTOS_CONTA_CORRENTE_PROCESSED_ORIGEM_NAME +".q-produtos-conta-corrente-processed";
 
 	/**
 	 * Nome do metodo criado no contexto do spring @Bean
 	 */
-	public static final String EXCHAGE_CONTA_CORRENTE_CREATED = "publishContaCorrenteCreated";
-	public static final String EXCHAGE_CONTA_CORRENTE_PROCESSED = "subcribeContaCorrenteProcessed";
+	String EXCHANGE_CONTA_CORRENTE_CREATED             = "publishContaCorrenteCreated";
+	String EXCHANGE_CONTA_CORRENTE_PROCESSED           = "subcribeContaCorrenteProcessed";
+	String EXCHANGE_PRODUTOS_CONTA_CORRENTE_PROCESSED  = "subcribeProdutosContaCorrenteProcessed";
 
 }

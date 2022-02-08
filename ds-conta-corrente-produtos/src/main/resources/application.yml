@@ -30,33 +30,25 @@ spring:
           destination: springCloudBus
           group: q-cloudbus-ds-conta-corrente
                 
-        subscribeContaCorrenteCreated:
-          destination: x-conta-corrente-created
-          group: q-conta-corrente-created
+        subscribeProdutosContaCorrenteCreated:
+          destination: x-produtos-conta-corrente-created
+          group: q-produtos-conta-corrente-created
           consumer:
             maxAttempts: 1
 
-        publishContaCorrenteProcessed:
-          destination: x-conta-corrente-processed
-          
-        publishProdutosContaCorrenteCreated:
-          destination: x-produtos-conta-corrente-created
+        publishProdutosContaCorrenteProcessed:
+          destination: x-produtos-conta-corrente-processed
 
       rabbit:
         bindings:
-          subscribeContaCorrenteCreated:
+          subscribeProdutosContaCorrenteCreated:
             consumer:
               exchangeType: fanout
               autoBindDlq: true
               republishToDlq: true
               requeueRejected: false
               
-
-          publishContaCorrenteProcessed:
-            producer:
-              exchangeType: fanout
-              
-          publishProdutosContaCorrenteCreated:
+          publishProdutosContaCorrenteProcessed:
             producer:
               exchangeType: fanout              
   jpa:

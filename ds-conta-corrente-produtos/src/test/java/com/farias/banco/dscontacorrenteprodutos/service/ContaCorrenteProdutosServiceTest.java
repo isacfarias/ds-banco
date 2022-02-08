@@ -35,24 +35,25 @@ class ContaCorrenteProdutosServiceTest {
 
 	@Test
 	void deveVincularProdutoSChequeEspecialECartaoAContaCorrente() {
-		PessoaContaCorrenteDTO contaCorrente = new PessoaContaCorrenteDTO();
-		contaCorrente.setContaCorrente(1l);
-		contaCorrente.setPessoa(2l);
-		contaCorrente.setScore(3);
+		PessoaContaCorrenteDTO contaCorrente = PessoaContaCorrenteDTO.builder()
+				.contaCorrente(1l)
+				.pessoa(2l)
+				.score(3)
+				.build();
 
-		List<ProdutosDTO> produtos = Arrays.asList(new ProdutosDTO(1, new BigDecimal(1000.0)), new ProdutosDTO(2, new BigDecimal(200.0)));
+		List<ProdutosDTO> produtos = Arrays.asList(new ProdutosDTO(1, new BigDecimal("1000.0")), new ProdutosDTO(2, new BigDecimal("200.0")));
 
 		ContaCorrenteProdutos contaCorrenteProdutos;
 		for (ProdutosDTO produto : produtos) {
-
 			if (produto.getProduto().equals(ContaCorrenteConstants.PROD_CARTAO_CREDITO)
-					&& produto.getValor().compareTo(new BigDecimal(0.0)) <= 0 ) continue;
+					&& produto.getValor().compareTo(new BigDecimal("0.0")) <= 0 ) continue;
 
-			contaCorrenteProdutos = new ContaCorrenteProdutos();
-			contaCorrenteProdutos.setContaCorrente(contaCorrente.getContaCorrente());
-			contaCorrenteProdutos.setProdutoTipo(produto.getProduto());
-			contaCorrenteProdutos.setAtivo( ( produto.getValor().compareTo(new BigDecimal(0.0)) == 1 ? 1: 0 ) );
-			contaCorrenteProdutos.setValor(produto.getValor());
+			contaCorrenteProdutos = ContaCorrenteProdutos.builder()
+					.contaCorrente(contaCorrente.getContaCorrente())
+					.produtoTipo(produto.getProduto())
+					.ativo((produto.getValor().compareTo(new BigDecimal("0.0")) > 0 ? 1 : 0))
+					.valor(produto.getValor())
+					.build();
 			repository.saveAndFlush(contaCorrenteProdutos);
 		}
 
@@ -63,24 +64,25 @@ class ContaCorrenteProdutosServiceTest {
 	
 	@Test
 	void deveVincularProdutoSChequeEspecialAContaCorrente() {
-		PessoaContaCorrenteDTO contaCorrente = new PessoaContaCorrenteDTO();
-		contaCorrente.setContaCorrente(2l);
-		contaCorrente.setPessoa(1l);
-		contaCorrente.setScore(0);
+		PessoaContaCorrenteDTO contaCorrente = PessoaContaCorrenteDTO.builder()
+				.contaCorrente(2l)
+				.pessoa(1l)
+				.score(0)
+				.build();
 
-		List<ProdutosDTO> produtos = Arrays.asList(new ProdutosDTO(1, new BigDecimal(0.0)), new ProdutosDTO(2, new BigDecimal(0.0)));
+		List<ProdutosDTO> produtos = Arrays.asList(new ProdutosDTO(1, new BigDecimal("0.0")), new ProdutosDTO(2, new BigDecimal("0.0")));
 
 		ContaCorrenteProdutos contaCorrenteProdutos;
 		for (ProdutosDTO produto : produtos) {
-
 			if (produto.getProduto().equals(ContaCorrenteConstants.PROD_CARTAO_CREDITO)
-					&& produto.getValor().compareTo(new BigDecimal(0.0)) <= 0 ) continue;
+					&& produto.getValor().compareTo(new BigDecimal("0.0")) <= 0 ) continue;
 
-			contaCorrenteProdutos = new ContaCorrenteProdutos();
-			contaCorrenteProdutos.setContaCorrente(contaCorrente.getContaCorrente());
-			contaCorrenteProdutos.setProdutoTipo(produto.getProduto());
-			contaCorrenteProdutos.setAtivo( ( produto.getValor().compareTo(new BigDecimal(0.0)) == 1 ? 1: 0 ) );
-			contaCorrenteProdutos.setValor(produto.getValor());
+			contaCorrenteProdutos = ContaCorrenteProdutos.builder()
+					.contaCorrente(contaCorrente.getContaCorrente())
+					.produtoTipo(produto.getProduto())
+					.ativo(( produto.getValor().compareTo(new BigDecimal("0.0")) > 0 ? 1: 0 ))
+					.valor(produto.getValor())
+					.build();
 			repository.saveAndFlush(contaCorrenteProdutos);
 		}
 

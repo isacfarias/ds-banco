@@ -9,6 +9,7 @@ spring:
     password: ABC_BANCO
     virtualhost: /
     
+    
   cloud:
 
     stream:
@@ -23,6 +24,12 @@ spring:
           consumer:
             maxAttempts: 1
 
+        subcribeProdutosContaCorrenteProcessed:
+          destination: x-produtos-conta-corrente-processed
+          group: q-produtos-conta-corrente-processed
+          consumer:
+            maxAttempts: 1            
+
         publishContaCorrenteCreated:
           destination: x-conta-corrente-created
 
@@ -35,6 +42,13 @@ spring:
               republishToDlq: true
               requeueRejected: false
 
+          subcribeProdutosContaCorrenteProcessed:
+            consumer:
+              exchangeType: fanout
+              autoBindDlq: true
+              republishToDlq: true
+              requeueRejected: false              
+         
           publishContaCorrenteCreated:
             producer:
               exchangeType: fanout

@@ -1,15 +1,16 @@
 package com.farias.banco.dspessoa.broker.inbound;
 
-import javax.transaction.Transactional;
-
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.stereotype.Component;
 
 import com.farias.banco.dspessoa.config.broker.BrokerInput;
 import com.farias.banco.dspessoa.constants.BrokerConstants;
-import com.farias.banco.dspessoa.model.Pessoa;
+import com.farias.banco.dspessoa.dto.PessoaContaCorrenteDTO;
+import com.farias.banco.dspessoa.service.PessoaService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.RequiredArgsConstructor;
 
@@ -18,14 +19,35 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class PessoaBrokerInboud {
 
-	private final BrokerInput input;
+	private final Logger LOG = LoggerFactory.getLogger(PessoaBrokerInboud.class);
+	
+	private final ObjectMapper mapper;
+	private final PessoaService service;
 
-	@StreamListener(target = BrokerConstants.EXCHAGE_CONTA_CORRENTE_PROCESSED)
-	public void contaCorrentePrecessed(Pessoa pessoa) {
-		
-		System.out.println("-.");
-		
-		
+	@StreamListener(target = BrokerConstants.EXCHANGE_CONTA_CORRENTE_PROCESSED)
+	public void contaCorrentePrecessed(String message) {
+		LOG.info("Mensagem recebida na fila [{}] - conteudo [{}]", BrokerConstants.Q_CONTA_CORRENTE_PROCESSED_ORIGE_NAME, message);
+		try {
+			LOG.info("[Start] - status atualizar conta corrente");
+			final var contaCorrente = mapper.readValue(message, PessoaContaCorrenteDTO.class);
+			service.atualizarContaCorrente(contaCorrente);
+			LOG.info("[Stop] - status atualizar conta corrente");	
+		} catch (Exception e) {
+			LOG.error(e.getMessage());
+		}
+	}
+	
+	@StreamListener(target = BrokerConstants.EXCHANGE_PRODUTOS_CONTA_CORRENTE_PROCESSED)
+	public void produtosContaCorrentePrecessed(String message) {
+		LOG.info("Mensagem recebida na fila [{}] - conteudo [{}]", BrokerConstants.Q_PRODUTOS_CONTA_CORRENTE_PROCESSED_ORIGE_NAME, message);
+		try {
+			LOG.info("[Start] - atualizar status conta corrente produtos");
+			final var contaCorrente = mapper.readValue(message, PessoaContaCorrenteDTO.class);
+			service.atualizarContaCorrenteProdutos(contaCorrente);
+			LOG.info("[Stop] - atualizar status conta corrente produtos");	
+		} catch (Exception e) {
+			LOG.error(e.getMessage());
+		}
 	}
 	
 

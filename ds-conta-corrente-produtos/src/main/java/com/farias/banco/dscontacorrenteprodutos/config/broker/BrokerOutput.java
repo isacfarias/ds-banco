@@ -8,7 +8,7 @@ import com.farias.banco.dscontacorrenteprodutos.contants.BrokerConstants;
 public interface BrokerOutput {
 
 	
-	@Output(BrokerConstants.EXCHANGE_PRODUTOS_CONTA_CORRENTE_CREATED)
+	@Output(BrokerConstants.EXCHANGE_PRODUTOS_CONTA_CORRENTE_PROCESSED)
 	MessageChannel publishProdutosContaCorrenteCreated();
 
 }

@@ -32,7 +32,7 @@ public class PessoaBrokerOutbound {
 			final var message = objectMapper.writeValueAsString(pessoa);
 			this.outbound.publishContaCorrenteCreated().send(MessageBuilder.withPayload(message).build());
 		} catch (Exception e) {
-			LOG.error("Error ao publicar mensagem na exchange :".concat(BrokerConstants.EXCHAGE_CONTA_CORRENTE_CREATED), e.getMessage() );
+			LOG.error("Error ao publicar mensagem na exchange :".concat(BrokerConstants.EXCHANGE_CONTA_CORRENTE_CREATED), e.getMessage() );
 		}
 
 	}

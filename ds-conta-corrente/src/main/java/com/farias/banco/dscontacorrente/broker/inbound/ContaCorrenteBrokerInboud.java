@@ -21,8 +21,6 @@ public class ContaCorrenteBrokerInboud {
 
 	private final Logger LOG = LoggerFactory.getLogger(ContaCorrenteBrokerInboud.class);
 
-
-	private final BrokerInput input;
 	private final ObjectMapper mapper;
 	private final ContaCorrenteService service;
 

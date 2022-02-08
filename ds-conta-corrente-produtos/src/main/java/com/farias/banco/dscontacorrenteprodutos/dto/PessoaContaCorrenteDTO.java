@@ -1,8 +1,13 @@
 package com.farias.banco.dscontacorrenteprodutos.dto;
 
-import lombok.Data;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.With;
 
-@Data
+
+@Getter
+@Builder
+@With
 public class PessoaContaCorrenteDTO {
 
 	private Long pessoa;

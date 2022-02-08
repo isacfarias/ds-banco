@@ -4,6 +4,10 @@ import lombok.*;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
+
+import com.farias.banco.dspessoa.enums.StatusEnum;
+
 @Getter
 @Builder
 @With
@@ -22,5 +26,9 @@ public class PessoaDTOResponse implements Serializable {
 	private Integer score;
 
 	private String tipo;
+	
+	private StatusEnum statusContaCorrente;
+	
+	private StatusEnum statusProdutos;
 
 }

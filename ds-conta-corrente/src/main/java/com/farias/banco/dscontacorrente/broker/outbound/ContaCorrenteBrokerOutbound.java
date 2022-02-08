@@ -27,9 +27,9 @@ public class ContaCorrenteBrokerOutbound {
 	public void vincularContaCorrentePublish(PessoaContaCorrenteDTO contaCorrente) {
 		try {
 			final var message = objectMapper.writeValueAsString(contaCorrente);
-			this.outbound.publishContaCorrenteCreated().send(MessageBuilder.withPayload(message).build());
+			this.outbound.publishContaCorrenteProcessed().send(MessageBuilder.withPayload(message).build());
 		} catch (Exception e) {
-			LOG.error(MESSAGE_ERROR, BrokerConstants.EXCHANGE_CONTA_CORRENTE_CREATED, e.getMessage() );
+			LOG.error(MESSAGE_ERROR, BrokerConstants.EXCHANGE_CONTA_CORRENTE_PROCESSED, e.getMessage() );
 		}
 	}
 
