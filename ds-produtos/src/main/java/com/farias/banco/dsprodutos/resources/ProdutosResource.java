@@ -1,42 +1,45 @@
 package com.farias.banco.dsprodutos.resources;
 
-import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.farias.banco.dsprodutos.dto.ProdutosTipoDTO;
 import com.farias.banco.dsprodutos.model.ProdutoTipo;
-import com.farias.banco.dsprodutos.repository.ProdutosTipoRepository;
+import com.farias.banco.dsprodutos.service.ProdutosTipoService;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @RestController
 @RequestMapping(value = "/produtos")
 public class ProdutosResource {
-	
-	@Autowired
-	private ProdutosTipoRepository repository;
+
+	private final ProdutosTipoService service;
 
 	@GetMapping
-	public ResponseEntity<List<ProdutoTipo>> produtos() {
-		List<ProdutoTipo> produtosTipo = repository.findAll();
-		return !produtosTipo.isEmpty() ? ResponseEntity.ok(produtosTipo) : ResponseEntity.notFound().build();		
+	public Page<ProdutosTipoDTO> produtos(@RequestParam(required = false) Optional<String> descricao,
+			@RequestParam(required = false) Optional<Long> produtoTipoId,
+			@RequestParam(defaultValue = "0") Integer page,
+			@RequestParam(defaultValue = "10") Integer size,
+			@RequestParam(defaultValue = "descricao") String sort,
+			@RequestParam(defaultValue = "ASC") Sort.Direction direction) {
+		return service.findAll(descricao, produtoTipoId, PageRequest.of(page, size, Sort.by(direction, sort)));		
 	}
-	
-	@GetMapping("/{id}")
-	public ResponseEntity<ProdutoTipo> produto(@PathVariable Integer id) {
-		Optional<ProdutoTipo> produtosTipo = repository.findById(id);
-		return produtosTipo.isPresent() ? ResponseEntity.ok(produtosTipo.get()) : ResponseEntity.notFound().build();		
-	}
-	
+
 	@PostMapping
-	public ResponseEntity<ProdutoTipo> cadastrarProdutos(@RequestBody ProdutoTipo produtoTipo) {
-		ProdutoTipo temp = repository.save(produtoTipo);
-		return ResponseEntity.ok(temp);		
+	@ResponseStatus(code = HttpStatus.CREATED)
+	public ProdutosTipoDTO cadastrarProdutos(@RequestBody ProdutoTipo produtoTipo) {
+		return service.save(produtoTipo);		
 	}
 }

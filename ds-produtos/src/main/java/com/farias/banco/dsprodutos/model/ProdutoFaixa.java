@@ -11,13 +11,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.With;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@Builder
+@With
 @Entity
 @Table(name = "produtofaixa")
 public class ProdutoFaixa {
@@ -25,7 +25,7 @@ public class ProdutoFaixa {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "prof_id")
-	private Integer id;
+	private Long id;
 	
 	@ManyToOne
 	@JoinColumn(name = "prodt_id")

@@ -24,7 +24,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.farias.banco.dsprodutos.model.ProdutoTipo;
-import com.farias.banco.dsprodutos.repository.ProdutosTipoRepository;
+import com.farias.banco.dsprodutos.service.ProdutosTipoService;
 
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -37,7 +37,7 @@ public class ProdutosResourceTest {
 	private int port;
 	
 	@MockBean
-	private ProdutosTipoRepository repository;
+	private ProdutosTipoService service;
 	
 	private MockMvc mockMvc;
 
@@ -48,7 +48,7 @@ public class ProdutosResourceTest {
 
 	@Test
 	void deveRestonaStatus200_quandoEncontrarResultado() throws Exception {
-		when(repository.findAll()).thenReturn(Arrays.asList(new ProdutoTipo(1, "Cheque especial"), new ProdutoTipo(2, "Cartão crédito")));
+		when(service.findAll()).thenReturn(Arrays.asList(new ProdutoTipo(1, "Cheque especial"), new ProdutoTipo(2, "Cartão crédito")));
 		
 		this.mockMvc.perform(get("/produtos")
                     .contentType(MediaType.APPLICATION_JSON))
@@ -60,7 +60,7 @@ public class ProdutosResourceTest {
 	
 	@Test
 	void deveRestonaStatus404_quandoNaoEncontrarResultado() throws Exception {
-		when(repository.findAll()).thenReturn(new ArrayList<>());
+		when(service.findAll()).thenReturn(new ArrayList<>());
 		
 		this.mockMvc.perform(get("/produtos")
                     .contentType(MediaType.APPLICATION_JSON))
