@@ -1,8 +1,8 @@
-package com.farias.banco.dscontacorrenteprodutos.feignclients.impls;
+package com.farias.banco.dscontacorrente.feignclients.impl;
 
 import org.springframework.data.domain.Page;
 
-import com.farias.banco.dscontacorrenteprodutos.feignclients.PageMixInCustom;
+import com.farias.banco.dscontacorrente.feignclients.PageMixInCustom;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 
 public class CustomJacksonModule extends SimpleModule {

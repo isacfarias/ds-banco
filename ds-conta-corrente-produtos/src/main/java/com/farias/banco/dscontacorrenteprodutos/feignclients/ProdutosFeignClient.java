@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.farias.banco.dscontacorrenteprodutos.config.feing.FeignConfig;
 import com.farias.banco.dscontacorrenteprodutos.dto.ProdutosDTO;
 import com.farias.banco.dscontacorrenteprodutos.dto.ProdutosTipoDTO;
-import com.farias.banco.dscontacorrenteprodutos.feignclients.impls.PageResourcesImpl;
+import com.farias.banco.dscontacorrenteprodutos.feignclients.impl.PageResourcesImpl;
 
 
 
 @Component
-@FeignClient(name = "ds-produtos",  configuration = { FeignConfig.class })
+@FeignClient(name = "ds-produtos", configuration = { FeignConfig.class })
 public interface ProdutosFeignClient {
 	
 	@GetMapping("/produtosfaixa/score/{score}")

@@ -1,4 +1,4 @@
-package com.farias.banco.dscontacorrenteprodutos.feignclients.impls;
+package com.farias.banco.dscontacorrenteprodutos.feignclients.impl;
 
 import java.util.Iterator;
 import java.util.List;

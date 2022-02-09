@@ -1,5 +1,16 @@
 package com.farias.banco.dscontacorrente.service;
 
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
+
 import com.farias.banco.dscontacorrente.broker.outbound.ContaCorrenteBrokerOutbound;
 import com.farias.banco.dscontacorrente.config.AppConfig;
 import com.farias.banco.dscontacorrente.dto.ContaCorrenteDTOResponse;
@@ -13,16 +24,8 @@ import com.farias.banco.dscontacorrente.model.Pessoa;
 import com.farias.banco.dscontacorrente.repository.ContaCorrenteRepository;
 import com.farias.banco.dscontacorrente.repository.specification.ContaCorrenteSpecification;
 import com.farias.banco.dscontacorrente.utils.ContaCorrenteNumeroUtils;
-import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -83,7 +86,10 @@ public class ContaCorrenteService {
 	private ContaCorrenteDTOResponse contaCorrenteProdutos(ContaCorrente contaCorrente) {
 			List<ContaCorrenteProdutoDTO> produtos = List.of();
 			try {
-				produtos = contaCorrenteProdutosFeignClients.contaCorrenteProdutos(contaCorrente.getId()).getBody();
+				produtos = contaCorrenteProdutosFeignClients.contaCorrenteProdutos(contaCorrente.getId(), PageRequest.of(0, 10)).getContent()
+						  .stream()
+						  .flatMap(Collection<ContaCorrenteProdutoDTO>::stream)
+						  .collect(Collectors.toList());
 			} catch (Exception e) {
 				LOG.error("O serviço [ds-conta-corrente-produtos] listar produtos vinculados a conta corrente não está respondendo.", e.getMessage());
 			}

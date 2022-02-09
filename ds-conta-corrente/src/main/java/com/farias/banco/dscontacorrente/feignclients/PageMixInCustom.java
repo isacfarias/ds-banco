@@ -1,6 +1,6 @@
-package com.farias.banco.dscontacorrenteprodutos.feignclients;
+package com.farias.banco.dscontacorrente.feignclients;
 
-import com.farias.banco.dscontacorrenteprodutos.feignclients.impl.PageResourcesImpl;
+import com.farias.banco.dscontacorrente.feignclients.impl.PageResourcesImpl;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 

@@ -1,4 +1,4 @@
-package com.farias.banco.dscontacorrenteprodutos.config.feing;
+package com.farias.banco.dscontacorrente.config.feing;
 
 import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +8,7 @@ import org.springframework.cloud.openfeign.support.SpringEncoder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.farias.banco.dscontacorrenteprodutos.feignclients.impl.CustomJacksonModule;
+import com.farias.banco.dscontacorrente.feignclients.impl.CustomJacksonModule;
 import com.fasterxml.jackson.databind.Module;
 
 import feign.codec.Encoder;
