@@ -11,14 +11,21 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.farias.banco.dsprodutos.resources.ProdutosFaixaResource;
+import com.farias.banco.dsprodutos.service.ProdutosFaixaService;
+
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.With;
 
 @Getter
 @Builder
 @With
 @Entity
+@NoArgsConstructor(staticName = "of")
+@AllArgsConstructor(staticName = "of")
 @Table(name = "produtofaixa")
 public class ProdutoFaixa {
 	

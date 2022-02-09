@@ -17,7 +17,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ProdutosTipoService {
 
-	private ProdutosTipoRepository repository;
+	private final ProdutosTipoRepository repository;
 
 	public Page<ProdutosTipoDTO> findAll(final Optional<String> descricao, final Optional<Long> produtoTipoId, PageRequest pageable) {
 		return repository.findAll(ProdutoTipoSpecification.builder()

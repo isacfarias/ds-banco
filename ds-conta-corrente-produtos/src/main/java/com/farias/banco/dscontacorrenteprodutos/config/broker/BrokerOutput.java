@@ -9,6 +9,6 @@ public interface BrokerOutput {
 
 	
 	@Output(BrokerConstants.EXCHANGE_PRODUTOS_CONTA_CORRENTE_PROCESSED)
-	MessageChannel publishProdutosContaCorrenteCreated();
+	MessageChannel publishProdutosContaCorrenteProcessed();
 
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.farias.banco.dsprodutos.dto.ProdutoFaixaDTO;
 import com.farias.banco.dsprodutos.dto.ProdutoFaixaDTORequest;
+import com.farias.banco.dsprodutos.dto.ProdutoValorDTO;
 import com.farias.banco.dsprodutos.dto.ProdutosTipoDTO;
 import com.farias.banco.dsprodutos.model.ProdutoFaixa;
 import com.farias.banco.dsprodutos.model.ProdutoTipo;
@@ -22,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ProdutosFaixaService {
 
-	private ProdutosFaixaRepository repository;
+	private final ProdutosFaixaRepository repository;
 
 	public Page<ProdutoFaixaDTO> findAll(final Optional<Long> id, final Optional<Long> produtoTipo,	
 			final Optional<Long> scoreMin, final Optional<Long> scoreMax,
@@ -37,10 +38,10 @@ public class ProdutosFaixaService {
 				.build(), pageable).map(this::buildDTO);
 	}
 
-	public List<ProdutoFaixaDTO> findByScore(Integer score) {
+	public List<ProdutoValorDTO> findByScore(Integer score) {
 		return repository.findByScoreFaixa(score)
 				.stream()
-				.map(this::buildDTO)
+				.map(this::buildProdutoValorDTO)
 				.collect(Collectors.toList());
 	}
 
@@ -65,6 +66,12 @@ public class ProdutosFaixaService {
 				.build();
 	}
 
+	private ProdutoValorDTO buildProdutoValorDTO(ProdutoFaixa p) {
+		return ProdutoValorDTO.builder()
+				.produto(p.getProdutoTipo().getId())
+				.valor(p.getValor())
+				.build();
+	}
 
 	private ProdutosTipoDTO buildProdutoTipoDTO(ProdutoFaixa p) {
 		return ProdutosTipoDTO.builder()

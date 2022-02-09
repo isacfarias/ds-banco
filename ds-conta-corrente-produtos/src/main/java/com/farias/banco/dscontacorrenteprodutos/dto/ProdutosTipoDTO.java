@@ -12,8 +12,8 @@ import lombok.With;
 @With
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProdutoTipoDTO {
+public class ProdutosTipoDTO {
 	
-	private Integer id;
+	private Long id;
 	private String descricao;
 }

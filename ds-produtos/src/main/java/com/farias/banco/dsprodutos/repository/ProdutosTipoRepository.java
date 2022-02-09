@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import com.farias.banco.dsprodutos.model.ProdutoTipo;
 
 @Repository
-public interface ProdutosTipoRepository extends JpaRepository<ProdutoTipo, Integer>, JpaSpecificationExecutor<ProdutoTipo> {
+public interface ProdutosTipoRepository extends JpaRepository<ProdutoTipo, Long>, JpaSpecificationExecutor<ProdutoTipo> {
 
 }

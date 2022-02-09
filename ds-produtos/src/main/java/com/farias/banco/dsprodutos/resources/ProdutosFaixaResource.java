@@ -2,14 +2,11 @@ package com.farias.banco.dsprodutos.resources;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,16 +18,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.farias.banco.dsprodutos.dto.ProdutoFaixaDTO;
 import com.farias.banco.dsprodutos.dto.ProdutoFaixaDTORequest;
+import com.farias.banco.dsprodutos.dto.ProdutoValorDTO;
 import com.farias.banco.dsprodutos.dto.ProdutosTipoDTO;
-import com.farias.banco.dsprodutos.model.ProdutoFaixa;
-import com.farias.banco.dsprodutos.repository.ProdutosFaixaRepository;
 import com.farias.banco.dsprodutos.service.ProdutosFaixaService;
 
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
 @RestController
 @RequestMapping(value = "/produtosfaixa")
+@RequiredArgsConstructor
 public class ProdutosFaixaResource {
 
 	private final ProdutosFaixaService service;
@@ -56,7 +53,7 @@ public class ProdutosFaixaResource {
 
 	@GetMapping("/score/{score}")
 	@ResponseStatus(code = HttpStatus.OK)
-	public List<ProdutoFaixaDTO> produtosPorScore(@PathVariable Integer score) {
+	public List<ProdutoValorDTO> produtosPorScore(@PathVariable Integer score) {
 		return service.findByScore(score);
 	}
 }

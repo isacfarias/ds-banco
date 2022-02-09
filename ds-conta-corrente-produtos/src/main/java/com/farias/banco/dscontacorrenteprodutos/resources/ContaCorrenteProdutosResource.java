@@ -1,5 +1,6 @@
  package com.farias.banco.dscontacorrenteprodutos.resources;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -23,7 +24,7 @@ public class ContaCorrenteProdutosResource {
 	private final ContaCorrenteProdutosService service;
 
 	@GetMapping
-	public Page<ContaCorrenteProdutoDTO> findAll(@RequestParam(required = false) Optional<Long> contaCorrenteProdutosId,
+	public Page<List<ContaCorrenteProdutoDTO>> findAll(@RequestParam(required = false) Optional<Long> contaCorrenteProdutosId,
 			@RequestParam(required = false) Optional<Long> contaCorrente,
 			@RequestParam(required = false) Optional<Integer> ativo,
 			@RequestParam(required = false) Optional<Long> produtoTipo,

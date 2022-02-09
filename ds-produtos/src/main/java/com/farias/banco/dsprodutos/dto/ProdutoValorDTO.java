@@ -11,6 +11,6 @@ import lombok.With;
 @With
 public class ProdutoValorDTO {
 
-	private Integer produto;
+	private Long produto;
 	private BigDecimal valor;
 }

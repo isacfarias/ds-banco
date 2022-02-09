@@ -20,9 +20,9 @@ import com.farias.banco.dsprodutos.service.ProdutosTipoService;
 
 import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
 @RestController
 @RequestMapping(value = "/produtos")
+@RequiredArgsConstructor
 public class ProdutosResource {
 
 	private final ProdutosTipoService service;
