@@ -3,6 +3,7 @@ package com.farias.banco.dscontacorrente.model;
 import java.io.Serializable;
 
 import com.farias.banco.dscontacorrente.enums.ContaTipo;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,6 +23,7 @@ public class Pessoa implements Serializable {
 
 	private Long id;
 	private String nome;
+	@JsonProperty("cpf_cnpj")
 	private String cpfCnpj;
 	private Integer score;
 	private String tipo;

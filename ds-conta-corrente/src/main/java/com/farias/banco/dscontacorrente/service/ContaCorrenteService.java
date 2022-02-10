@@ -12,7 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.farias.banco.dscontacorrente.broker.outbound.ContaCorrenteBrokerOutbound;
-import com.farias.banco.dscontacorrente.config.AppConfig;
+import com.farias.banco.dscontacorrente.config.app.AppConfig;
 import com.farias.banco.dscontacorrente.dto.ContaCorrenteDTOResponse;
 import com.farias.banco.dscontacorrente.dto.ContaCorrenteProdutoDTO;
 import com.farias.banco.dscontacorrente.dto.PessoaContaCorrenteDTO;

@@ -1,4 +1,4 @@
-package com.farias.banco.dspessoa.config;
+package com.farias.banco.dscontacorrenteprodutos.config.app;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.RestController;

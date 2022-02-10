@@ -1,4 +1,4 @@
-package com.farias.banco.dscontacorrente.config;
+package com.farias.banco.dscontacorrente.config.app;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
