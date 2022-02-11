@@ -4,10 +4,9 @@ import static com.farias.banco.dspessoa.constants.MappperConstants.pessoaMapper;
 
 import java.util.Optional;
 
-import javax.persistence.EntityNotFoundException;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.farias.banco.dspessoa.broker.outbound.PessoaBrokerOutbound;
@@ -17,6 +16,7 @@ import com.farias.banco.dspessoa.dto.PessoaRequestDTO;
 import com.farias.banco.dspessoa.dto.PessoaResponseDTO;
 import com.farias.banco.dspessoa.enums.PessoaTipoEnum;
 import com.farias.banco.dspessoa.enums.StatusEnum;
+import com.farias.banco.dspessoa.handler.exception.DataBaseException;
 import com.farias.banco.dspessoa.repository.PessoaRepository;
 import com.farias.banco.dspessoa.repository.specification.PessoaSpecification;
 import com.farias.banco.dspessoa.utils.ScoreUtils;
@@ -54,7 +54,7 @@ public class PessoaService {
 	public void atualizarContaCorrente(PessoaContaCorrenteDTO contaCorrente) {
 		repository.save(repository.findById(contaCorrente.getPessoa())
 				.map(p -> p.withStatusContaCorrente(StatusEnum.OK))
-				.orElseThrow(() -> new EntityNotFoundException("recurso não encontrado")));
+				.orElseThrow(() -> new DataBaseException(HttpStatus.NOT_FOUND, "Recurso não encontrado")));
 	}
 	
 	public void atualizarContaCorrenteProdutos(PessoaContaCorrenteDTO contaCorrente) {
@@ -62,7 +62,7 @@ public class PessoaService {
 				.map(p -> p.withStatusProdutos(StatusEnum.OK)
 					       .withStatusContaCorrente(StatusEnum.OK)
 						)
-				.orElseThrow(() -> new EntityNotFoundException("recurso não encontrado")));
+				.orElseThrow(() -> new DataBaseException(HttpStatus.NOT_FOUND, "Recurso não encontrado")));
 	}
 
 	private String tipoPessoa(String cpfCnpj) {
