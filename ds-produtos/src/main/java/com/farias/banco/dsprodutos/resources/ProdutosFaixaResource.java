@@ -19,12 +19,15 @@ import org.springframework.web.bind.annotation.RestController;
 import com.farias.banco.dsprodutos.dto.ProdutoFaixaDTO;
 import com.farias.banco.dsprodutos.dto.ProdutoFaixaDTORequest;
 import com.farias.banco.dsprodutos.dto.ProdutoValorDTO;
-import com.farias.banco.dsprodutos.dto.ProdutosTipoDTO;
 import com.farias.banco.dsprodutos.service.ProdutosFaixaService;
 
-import lombok.AllArgsConstructor;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 
+@Api(tags = {"Produtos faixa"})
 @RestController
 @RequestMapping(value = "/produtosfaixa")
 @RequiredArgsConstructor
@@ -32,6 +35,11 @@ public class ProdutosFaixaResource {
 
 	private final ProdutosFaixaService service;
 
+	
+	@ApiOperation(value = "Faz um get para retornar todos as faixas de produtos cadastradas", response = ProdutoFaixaDTO[].class)
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "Em caso de sucesso.", response = ProdutoFaixaDTO.class)
+	})
 	@GetMapping
 	public Page<ProdutoFaixaDTO> produtosScore(@RequestParam(required = false) Optional<Long> id,
 			@RequestParam(required = false) Optional<Long> produtoTipo,
@@ -45,12 +53,22 @@ public class ProdutosFaixaResource {
 		return service.findAll(id, produtoTipo, scoreMin, scoreMax, valor, PageRequest.of(page, size, Sort.by(direction, sort)));		
 	}
 
+	@ApiOperation(value = "Faz um post para cadastrar uma nova faixa de produto", response = ProdutoFaixaDTO.class)
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "Em caso de sucesso.", response = ProdutoFaixaDTO.class),
+			@ApiResponse(code = 400, message = "Em caso de body invalido.", response = String.class)
+	})	    
 	@PostMapping
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public ProdutoFaixaDTO cadastrarProdutos(@RequestBody ProdutoFaixaDTORequest produtoFaixa) {
 		return service.save(produtoFaixa);
 	}
 
+	
+	@ApiOperation(value = "Faz um get para retornar todas as faixas de produtos cadastradas, para um score especifico", response = ProdutoValorDTO[].class)
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "Em caso de sucesso.", response = ProdutoValorDTO.class)
+	})
 	@GetMapping("/score/{score}")
 	@ResponseStatus(code = HttpStatus.OK)
 	public List<ProdutoValorDTO> produtosPorScore(@PathVariable Integer score) {

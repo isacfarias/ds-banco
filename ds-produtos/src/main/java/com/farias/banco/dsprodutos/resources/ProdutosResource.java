@@ -18,8 +18,10 @@ import com.farias.banco.dsprodutos.dto.ProdutosTipoDTO;
 import com.farias.banco.dsprodutos.model.ProdutoTipo;
 import com.farias.banco.dsprodutos.service.ProdutosTipoService;
 
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 
+@Api(tags = {"Produtos"})
 @RestController
 @RequestMapping(value = "/produtos")
 @RequiredArgsConstructor
