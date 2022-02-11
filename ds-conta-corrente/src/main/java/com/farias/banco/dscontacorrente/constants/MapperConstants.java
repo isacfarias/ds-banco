@@ -6,9 +6,9 @@ import com.farias.banco.dscontacorrente.utils.mapper.ContaCorrenteMapper;
 import com.farias.banco.dscontacorrente.utils.mapper.PessoaMapper;
 
 public class MapperConstants {
-	
-public MapperConstants() {}
-	
+
+	public MapperConstants() {}
+
 	public static final ContaCorrenteMapper contaCorrenteMapper = Mappers.getMapper(ContaCorrenteMapper.class);
 	public static final PessoaMapper pessoaMapper               = Mappers.getMapper(PessoaMapper.class);
 

@@ -1,8 +1,7 @@
 package com.farias.banco.dscontacorrenteprodutos.service;
 
-import static com.farias.banco.dscontacorrenteprodutos.contants.ContaCorrenteConstants.ATIVO;
-import static com.farias.banco.dscontacorrenteprodutos.contants.ContaCorrenteConstants.INATIVO;
 import static com.farias.banco.dscontacorrenteprodutos.contants.ContaCorrenteConstants.PROD_CARTAO_CREDITO;
+import static com.farias.banco.dscontacorrenteprodutos.contants.MapperConstants.contaCorrenteMapper;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -18,7 +17,6 @@ import org.springframework.stereotype.Service;
 import com.farias.banco.dscontacorrenteprodutos.broker.outbound.ProdutosContaCorrenteBrokerOutbound;
 import com.farias.banco.dscontacorrenteprodutos.dto.ContaCorrenteProdutoDTO;
 import com.farias.banco.dscontacorrenteprodutos.dto.PessoaContaCorrenteDTO;
-import com.farias.banco.dscontacorrenteprodutos.dto.ProdutosTipoDTO;
 import com.farias.banco.dscontacorrenteprodutos.feignclients.ProdutosFeignClient;
 import com.farias.banco.dscontacorrenteprodutos.model.ContaCorrenteProdutos;
 import com.farias.banco.dscontacorrenteprodutos.repository.ContaCorrenteProdutosRepository;
@@ -42,14 +40,10 @@ public class ContaCorrenteProdutosService {
 			.stream()
 			.filter( produto -> !(produto.getProduto().equals(PROD_CARTAO_CREDITO)
 					&& produto.getValor().compareTo(new BigDecimal("0.0")) <= 0 ))
-			.forEach(produto -> repository.save(ContaCorrenteProdutos.builder()
-					.ativo(produto.getValor().compareTo(new BigDecimal("0.0")) > 0 ? ATIVO : INATIVO)
-					.contaCorrente(pessoaContaCorrente.getContaCorrente())
-					.produtoTipo(produto.getProduto())
-					.valor(produto.getValor())
-					.build()
+			.forEach(produto -> repository.save(contaCorrenteMapper.buildContaCorrenteProdutos(produto)
+					.withContaCorrente(pessoaContaCorrente.getContaCorrente())
 					));
-
+			
 			outbound.publishProdutosContaCorrenteProcessed(pessoaContaCorrente);
 
 		} catch (Exception e) {
@@ -72,11 +66,8 @@ public class ContaCorrenteProdutosService {
 			produtos = produtosScoreFeignClient.produto(contaCorrenteProdutos.getProdutoTipo(), PageRequest.of(0, 10)).getContent()
 					.stream()
 					.filter(Objects:: nonNull)
-					.map(c -> ContaCorrenteProdutoDTO.builder()
-							.produto(c.getDescricao())
-							.limite(contaCorrenteProdutos.getValor())
-							.build()
-							)
+					.map(c -> contaCorrenteMapper.buildContaCorrenteProdutosDTO(c)
+							.withLimite(contaCorrenteProdutos.getValor()) )
 					.toList();
 
 
