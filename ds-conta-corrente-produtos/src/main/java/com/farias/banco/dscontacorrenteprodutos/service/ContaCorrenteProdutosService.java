@@ -40,7 +40,8 @@ public class ContaCorrenteProdutosService {
 			.stream()
 			.filter( produto -> !(produto.getProduto().equals(PROD_CARTAO_CREDITO)
 					&& produto.getValor().compareTo(new BigDecimal("0.0")) <= 0 ))
-			.forEach(produto -> repository.save(contaCorrenteMapper.buildContaCorrenteProdutos(produto)
+			.forEach(produto -> 
+			         repository.save(contaCorrenteMapper.buildContaCorrenteProdutos(produto)
 					.withContaCorrente(pessoaContaCorrente.getContaCorrente())
 					));
 			

@@ -19,7 +19,7 @@ public interface ContaCorrenteProdutosMapper {
 		@Mapping(target = "id", ignore = true),
 		@Mapping(target = "contaCorrente", ignore = true),
 		@Mapping(target = "ativo", expression = "java(produto.getValor().compareTo(new BigDecimal(\"0.0\")) > 0 ? ContaCorrenteConstants.ATIVO : ContaCorrenteConstants.INATIVO)"),
-		@Mapping(target = "produtoTipo", ignore = true)
+		@Mapping(target = "produtoTipo", source = "produto")
 	})
 	ContaCorrenteProdutos buildContaCorrenteProdutos(ProdutosDTO produto);
 
