@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.farias.banco.dscontacorrente.dto.ContaCorrenteDTOResponse;
+import com.farias.banco.dscontacorrente.dto.ContaCorrenteResponseDTO;
 import com.farias.banco.dscontacorrente.service.ContaCorrenteService;
 
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ public class ContaCorrenteResource {
 	private final ContaCorrenteService service;
 
 	@GetMapping()
-	public Page<ContaCorrenteDTOResponse> contasCorrente(@RequestParam(required = false) Optional<String> agencia,
+	public Page<ContaCorrenteResponseDTO> contasCorrente(@RequestParam(required = false) Optional<String> agencia,
 			@RequestParam(required = false) Optional<String> numero,
 			@RequestParam(required = false) Optional<String> tipo,
 			@RequestParam(required = false) Optional<Long> pessoaId,

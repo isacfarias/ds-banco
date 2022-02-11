@@ -7,7 +7,7 @@ import lombok.*;
 @With
 @NoArgsConstructor
 @AllArgsConstructor
-public class PessoaContaCorrenteDTO {
+public class PessoaContaCorrenteResponseDTO {
 
 	private Long pessoa;
 	private Long contaCorrente;

@@ -9,7 +9,7 @@ import java.util.List;
 @With
 @NoArgsConstructor
 @AllArgsConstructor
-public class ContaCorrenteDTOResponse {
+public class ContaCorrenteResponseDTO {
 	
 	private Integer agencia;
 	private Integer numero;

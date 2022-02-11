@@ -13,9 +13,8 @@ import org.springframework.stereotype.Service;
 
 import com.farias.banco.dscontacorrente.broker.outbound.ContaCorrenteBrokerOutbound;
 import com.farias.banco.dscontacorrente.config.app.AppConfig;
-import com.farias.banco.dscontacorrente.dto.ContaCorrenteDTOResponse;
+import com.farias.banco.dscontacorrente.dto.ContaCorrenteResponseDTO;
 import com.farias.banco.dscontacorrente.dto.ContaCorrenteProdutoDTO;
-import com.farias.banco.dscontacorrente.dto.PessoaContaCorrenteDTO;
 import com.farias.banco.dscontacorrente.enums.ContaTipo;
 import com.farias.banco.dscontacorrente.enums.PessoaTipoEnum;
 import com.farias.banco.dscontacorrente.feignclients.ContaCorrenteProdutosFeignClients;
@@ -26,6 +25,9 @@ import com.farias.banco.dscontacorrente.repository.specification.ContaCorrenteSp
 import com.farias.banco.dscontacorrente.utils.ContaCorrenteNumeroUtils;
 
 import lombok.RequiredArgsConstructor;
+
+import static com.farias.banco.dscontacorrente.constants.MapperConstants.contaCorrenteMapper;
+import static com.farias.banco.dscontacorrente.constants.MapperConstants.pessoaMapper;
 
 @Service
 @RequiredArgsConstructor
@@ -46,30 +48,25 @@ public class ContaCorrenteService {
 				.pessoa(pessoa.getId())
 				.tipo(contaTipo(pessoa.getTipo()))
 				.build());
+		
+		final var pessoaContaCorrenteResponse = pessoaMapper.buildPessoaContaCorrenteResponseDTO(pessoa)
+				.withContaCorrente(account.getId());
 
-		outbound.vincularProdutosContaCorrentePublish(PessoaContaCorrenteDTO.builder()
-				.pessoa(pessoa.getId())
-				.contaCorrente(account.getId())
-				.score(pessoa.getScore())
-				.build());
-
-		outbound.vincularContaCorrentePublish(PessoaContaCorrenteDTO.builder()
-				.pessoa(pessoa.getId())
-				.contaCorrente(account.getId())
-				.score(pessoa.getScore())
-				.build());
+		outbound.vincularProdutosContaCorrentePublish(pessoaContaCorrenteResponse);
+		outbound.vincularContaCorrentePublish(pessoaContaCorrenteResponse);
+		
 
 		return account;
 	}
 
-	public List<ContaCorrenteDTOResponse> searchContaCorrentePorPessoa(Long pessoaId) {
+	public List<ContaCorrenteResponseDTO> searchContaCorrentePorPessoa(Long pessoaId) {
 		return repository.findByPessoa(pessoaId)
 				.parallelStream()
 				.map(this::contaCorrenteProdutos)
 				.collect(Collectors.toList());
 	}
 
-	public Page<ContaCorrenteDTOResponse> contaCorrenteProdutos(final Optional<String> agencia,
+	public Page<ContaCorrenteResponseDTO> contaCorrenteProdutos(final Optional<String> agencia,
 			final Optional<String> numero,
 			final Optional<String> tipo,
 			final Optional<Long> pessoaId,
@@ -83,7 +80,7 @@ public class ContaCorrenteService {
 				.map(this::contaCorrenteProdutos);
 	}
 
-	private ContaCorrenteDTOResponse contaCorrenteProdutos(ContaCorrente contaCorrente) {
+	private ContaCorrenteResponseDTO contaCorrenteProdutos(ContaCorrente contaCorrente) {
 			List<ContaCorrenteProdutoDTO> produtos = List.of();
 			try {
 				produtos = contaCorrenteProdutosFeignClients.contaCorrenteProdutos(contaCorrente.getId(), PageRequest.of(0, 10)).getContent()
@@ -93,12 +90,9 @@ public class ContaCorrenteService {
 			} catch (Exception e) {
 				LOG.error("O serviço [ds-conta-corrente-produtos] listar produtos vinculados a conta corrente não está respondendo.", e.getMessage());
 			}
-			return ContaCorrenteDTOResponse.builder()
-					.agencia(contaCorrente.getAgencia())
-					.numero(contaCorrente.getNumero())
-					.tipo(contaCorrente.getTipo().name())
-					.produtos(produtos)
-					.build();
+			
+			return contaCorrenteMapper.buildContaCorrenteResponseDTO(contaCorrente)
+					.withProdutos(produtos);
 	}
 
 	private Integer contaNumero() {

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 import com.farias.banco.dscontacorrente.config.broker.BrokerOutput;
 import com.farias.banco.dscontacorrente.constants.BrokerConstants;
-import com.farias.banco.dscontacorrente.dto.PessoaContaCorrenteDTO;
+import com.farias.banco.dscontacorrente.dto.PessoaContaCorrenteResponseDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -24,7 +24,7 @@ public class ContaCorrenteBrokerOutbound {
 	private final BrokerOutput outbound;
 	private final ObjectMapper objectMapper;
 
-	public void vincularContaCorrentePublish(PessoaContaCorrenteDTO contaCorrente) {
+	public void vincularContaCorrentePublish(PessoaContaCorrenteResponseDTO contaCorrente) {
 		try {
 			final var message = objectMapper.writeValueAsString(contaCorrente);
 			this.outbound.publishContaCorrenteProcessed().send(MessageBuilder.withPayload(message).build());
@@ -33,7 +33,7 @@ public class ContaCorrenteBrokerOutbound {
 		}
 	}
 
-	public void vincularProdutosContaCorrentePublish(PessoaContaCorrenteDTO contaCorrente) {
+	public void vincularProdutosContaCorrentePublish(PessoaContaCorrenteResponseDTO contaCorrente) {
 		try {
 			final var message = objectMapper.writeValueAsString(contaCorrente);
 			this.outbound.publishProdutosContaCorrenteCreated().send(MessageBuilder.withPayload(message).build());
