@@ -32,7 +32,7 @@ public class PessoaResource {
 
 	private final PessoaService service;
 
-	@ApiOperation(value = "Faz um get para retornar todas as pessoas cadastradas", response = PessoaResponseDTO.class)
+	@ApiOperation(value = "Faz um get para retornar todas as pessoas cadastradas", response = PessoaResponseDTO[].class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Em caso de sucesso.", response = String.class)
 	})
@@ -50,7 +50,7 @@ public class PessoaResource {
 	
 	@ApiOperation(value = "Faz um post para cadastrar uma pessoa", response = String.class)
 	@ApiResponses(value = {
-			@ApiResponse(code = 200, message = "Em caso de sucesso.", response = String.class),
+			@ApiResponse(code = 200, message = "Em caso de sucesso.", response = PessoaResponseDTO.class),
 			@ApiResponse(code = 400, message = "Em caso de body invalido.", response = String.class)
 	})
 	@PostMapping
