@@ -1,16 +1,22 @@
 package com.farias.banco.dspessoa.dto;
 
-import lombok.*;
-
 import java.io.Serializable;
 
 import com.farias.banco.dspessoa.enums.StatusEnum;
+
+import io.swagger.annotations.ApiModel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.With;
 
 @Getter
 @Builder
 @With
 @NoArgsConstructor
 @AllArgsConstructor
+@ApiModel(value = "PessoaResponse")
 public class PessoaResponseDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
