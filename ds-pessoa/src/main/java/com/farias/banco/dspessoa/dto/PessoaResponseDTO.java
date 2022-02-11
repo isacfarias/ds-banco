@@ -4,8 +4,6 @@ import lombok.*;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
-
 import com.farias.banco.dspessoa.enums.StatusEnum;
 
 @Getter
