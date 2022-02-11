@@ -14,8 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.farias.banco.dscontacorrenteprodutos.dto.ContaCorrenteProdutoDTO;
 import com.farias.banco.dscontacorrenteprodutos.service.ContaCorrenteProdutosService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 
+@Api(tags = {"Conta corrente produtos"})
 @RequiredArgsConstructor
 @RestController
 @RequestMapping(value = "/contacorrenteprodutos")
@@ -23,6 +28,11 @@ public class ContaCorrenteProdutosResource {
 	
 	private final ContaCorrenteProdutosService service;
 
+
+	@ApiOperation(value = "Faz um get para retornar todas as contas corrente produtos cadastradas", response = ContaCorrenteProdutoDTO[].class)
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "Em caso de sucesso.", response = ContaCorrenteProdutoDTO.class)
+	})
 	@GetMapping
 	public Page<List<ContaCorrenteProdutoDTO>> findAll(@RequestParam(required = false) Optional<Long> contaCorrenteProdutosId,
 			@RequestParam(required = false) Optional<Long> contaCorrente,

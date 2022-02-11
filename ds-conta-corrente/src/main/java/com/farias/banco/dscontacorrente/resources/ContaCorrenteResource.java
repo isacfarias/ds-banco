@@ -29,7 +29,7 @@ public class ContaCorrenteResource {
 
 	@ApiOperation(value = "Faz um get para retornar todas as contas corrente cadastradas", response = ContaCorrenteResponseDTO[].class)
 	@ApiResponses(value = {
-			@ApiResponse(code = 200, message = "Em caso de sucesso.", response = String.class)
+			@ApiResponse(code = 200, message = "Em caso de sucesso.", response = ContaCorrenteResponseDTO.class)
 	})
 	@GetMapping()
 	public Page<ContaCorrenteResponseDTO> contasCorrente(@RequestParam(required = false) Optional<String> agencia,

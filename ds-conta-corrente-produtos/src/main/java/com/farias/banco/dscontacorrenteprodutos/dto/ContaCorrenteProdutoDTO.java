@@ -2,6 +2,7 @@ package com.farias.banco.dscontacorrenteprodutos.dto;
 
 import java.math.BigDecimal;
 
+import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,6 +15,7 @@ import lombok.With;
 @With
 @NoArgsConstructor
 @AllArgsConstructor
+@ApiModel(value = "ContaCorrenteProduto")
 public class ContaCorrenteProdutoDTO {
 	
 	private String produto;
