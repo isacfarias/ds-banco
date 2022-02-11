@@ -1,11 +1,11 @@
 package com.farias.banco.dspessoa.service;
 
+import static com.farias.banco.dspessoa.constants.MappperConstants.pessoaMapper;
+
 import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -13,12 +13,10 @@ import org.springframework.stereotype.Service;
 import com.farias.banco.dspessoa.broker.outbound.PessoaBrokerOutbound;
 import com.farias.banco.dspessoa.constants.PessoaConstants;
 import com.farias.banco.dspessoa.dto.PessoaContaCorrenteDTO;
-import com.farias.banco.dspessoa.dto.PessoaDTORequest;
-import com.farias.banco.dspessoa.dto.PessoaDTOResponse;
+import com.farias.banco.dspessoa.dto.PessoaRequestDTO;
+import com.farias.banco.dspessoa.dto.PessoaResponseDTO;
 import com.farias.banco.dspessoa.enums.PessoaTipoEnum;
 import com.farias.banco.dspessoa.enums.StatusEnum;
-import com.farias.banco.dspessoa.feignclients.ContaCorrenteFeignClients;
-import com.farias.banco.dspessoa.model.Pessoa;
 import com.farias.banco.dspessoa.repository.PessoaRepository;
 import com.farias.banco.dspessoa.repository.specification.PessoaSpecification;
 import com.farias.banco.dspessoa.utils.ScoreUtils;
@@ -29,28 +27,28 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class PessoaService {
 
-	private final Logger LOG = LoggerFactory.getLogger(PessoaService.class);
-
 	private final PessoaRepository repository;
-	private final ContaCorrenteFeignClients contaCorrenteFeignClients;
 	private final ScoreUtils scoreUtils;
 	private final PessoaBrokerOutbound brokerOutbound;
 
-	public Page<PessoaDTOResponse> findAll(final Optional<String> nome, final  Optional<String> tipo, final Optional<Integer> score, final Pageable pegeable) {
+	public Page<PessoaResponseDTO> findAll(final Optional<String> nome, final  Optional<String> tipo, final Optional<Integer> score, final Pageable pegeable) {
 		return repository.findAll(PessoaSpecification.builder()
 				.nome(nome)
 				.tipo(tipo)
 				.score(score)
-				.build(), pegeable).map(this::buildResponse);
+				.build(), pegeable).map(p -> pessoaMapper.buildPessoaResponseDTO(p));
 	}
 
-	public PessoaDTOResponse cadastrarPessoa(PessoaDTORequest pessoaRequest) {
-
-		final var pessoa = repository.save(buildPessoaRequest(pessoaRequest));
-
+	public PessoaResponseDTO cadastrarPessoa(PessoaRequestDTO pessoaRequest) {
+		final var pessoa = repository.save(pessoaMapper.buildPessoa(pessoaRequest)
+				.withTipo(tipoPessoa(pessoaRequest.getCpfCnpj()))
+				.withScore(scoreUtils.score())
+				.withStatusContaCorrente(StatusEnum.PENDING)
+				.withStatusProdutos(StatusEnum.PENDING)
+				);
+		
 		brokerOutbound.contaCorrentePublish(pessoa);
-
-		return buildResponse(pessoa);
+		return pessoaMapper.buildPessoaResponseDTO(pessoa);
 	}
 
 	public void atualizarContaCorrente(PessoaContaCorrenteDTO contaCorrente) {
@@ -75,32 +73,7 @@ public class PessoaService {
 		} else if (tipoPessoa <= PessoaConstants.PESSOA_FISICA) {
 			return PessoaTipoEnum.PF.name();
 		}
-		return null;
+		return PessoaTipoEnum.NA.name();
 	}
-
-
-	private Pessoa buildPessoaRequest(PessoaDTORequest pessoaRequest) {
-		return Pessoa.builder()
-				.nome(pessoaRequest.getNome())
-				.cpfCnpj(pessoaRequest.getCpfCnpj())
-				.score(scoreUtils.score())
-				.statusContaCorrente(StatusEnum.PENDING)
-				.statusProdutos(StatusEnum.PENDING)
-				.tipo(tipoPessoa(pessoaRequest.getCpfCnpj()))
-				.build();
-	}
-
-	private PessoaDTOResponse buildResponse(Pessoa pessoa) {
-		return PessoaDTOResponse.builder()
-				.id(pessoa.getId())
-				.nome(pessoa.getNome())
-				.cpfCnpj(pessoa.getCpfCnpj())
-				.tipo(pessoa.getTipo())
-				.score(pessoa.getScore())
-				.statusContaCorrente(pessoa.getStatusContaCorrente())
-				.statusProdutos(pessoa.getStatusProdutos())
-				.build();
-	}
-
 
 }

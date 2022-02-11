@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
-import com.farias.banco.dspessoa.dto.PessoaDTORequest;
+import com.farias.banco.dspessoa.dto.PessoaRequestDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +52,7 @@ public class PessoaServiceTest {
 
 	@Test
 	void deveCriarCadastroDoTipoPF_returnaTrue_quandoForVerdadeiro() {
-		final var pessoaFisica = PessoaDTORequest.builder()
+		final var pessoaFisica = PessoaRequestDTO.builder()
 				.nome("Jośe Valadares")
 				.cpfCnpj("47280738079")
 				.build();
@@ -63,7 +63,7 @@ public class PessoaServiceTest {
 
 	@Test
 	void deveCriarCadastroDoTipoPJ_returnaTrue_quandoForVerdadeiro() {
-		final var pessoaFisica = PessoaDTORequest.builder()
+		final var pessoaFisica = PessoaRequestDTO.builder()
 				.nome("Gomas & Dias - ME")
 				.cpfCnpj("87320652000191")
 				.build();
@@ -74,7 +74,7 @@ public class PessoaServiceTest {
 
 	@Test
 	void deveCriarCadastroComScoreEnte0e9_returnaTrue_quandoForVerdadeiro() {
-		final var pessoaFisica = PessoaDTORequest.builder()
+		final var pessoaFisica = PessoaRequestDTO.builder()
 				.nome("Asdrubaldo Ferro")
 				.cpfCnpj("25661236085")
 				.build();

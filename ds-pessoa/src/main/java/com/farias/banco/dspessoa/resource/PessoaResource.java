@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.farias.banco.dspessoa.dto.PessoaDTORequest;
-import com.farias.banco.dspessoa.dto.PessoaDTOResponse;
+import com.farias.banco.dspessoa.dto.PessoaRequestDTO;
+import com.farias.banco.dspessoa.dto.PessoaResponseDTO;
 import com.farias.banco.dspessoa.service.PessoaService;
 
 import lombok.RequiredArgsConstructor;
@@ -28,7 +28,7 @@ public class PessoaResource {
 	private final PessoaService service;
 
 	@GetMapping
-	public Page<PessoaDTOResponse> pessoas(@RequestParam(required = false) Optional<String> nome,
+	public Page<PessoaResponseDTO> pessoas(@RequestParam(required = false) Optional<String> nome,
 			@RequestParam(required = false) Optional<String> tipo,
 			@RequestParam(required = false) Optional<Integer> score,
 			@RequestParam(defaultValue = "0") Integer page,
@@ -39,7 +39,7 @@ public class PessoaResource {
 	}
 
 	@PostMapping
-	public ResponseEntity<PessoaDTOResponse> cadastrarPessoa(@Validated @RequestBody PessoaDTORequest pessoaRequest) {
+	public ResponseEntity<PessoaResponseDTO> cadastrarPessoa(@Validated @RequestBody PessoaRequestDTO pessoaRequest) {
 		return ResponseEntity.ok(service.cadastrarPessoa(pessoaRequest));
 	}
 }
