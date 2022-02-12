@@ -5,6 +5,11 @@ import org.springframework.messaging.MessageChannel;
 
 import com.farias.banco.dspessoa.constants.BrokerConstants;
 
+/**
+ * Referencias
+ *  https://docs.spring.io/spring-cloud-stream/docs/Brooklyn.RELEASE/reference/html/_getting_started.html
+ */
+
 public interface BrokerOutput {
 
 

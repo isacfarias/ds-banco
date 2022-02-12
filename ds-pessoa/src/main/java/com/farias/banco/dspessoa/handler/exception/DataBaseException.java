@@ -15,8 +15,4 @@ public class DataBaseException extends RuntimeException {
         this.status = status;
     }
 
-    public DataBaseException(HttpStatus status, String message, Throwable e) {
-        super(message, e);
-        this.status = status;
-    }
 }

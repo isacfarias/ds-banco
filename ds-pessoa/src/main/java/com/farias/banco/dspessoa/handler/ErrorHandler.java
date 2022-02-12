@@ -59,6 +59,19 @@ public class ErrorHandler {
     }
     
 	
+    @ExceptionHandler({org.hibernate.exception.ConstraintViolationException.class})
+    public ResponseEntity<StandardError> handleConstraintViolationException(org.hibernate.exception.ConstraintViolationException e, HttpServletRequest request) {
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        return ResponseEntity
+                .status(status)
+                .body(StandardError.builder()
+                        .status(status.value())
+                        .error("Database exception")
+                        .message(List.of(e.getMessage()))
+                        .path(request.getRequestURI())
+                        .build());
+    }
+    
     @ExceptionHandler({ConstraintViolationException.class})
     public ResponseEntity<StandardError> handleConstraintViolationException(ConstraintViolationException e, HttpServletRequest request) {
         HttpStatus status = HttpStatus.BAD_REQUEST;

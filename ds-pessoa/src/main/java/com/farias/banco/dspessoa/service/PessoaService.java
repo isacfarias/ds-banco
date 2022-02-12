@@ -36,18 +36,19 @@ public class PessoaService {
 				.nome(nome)
 				.tipo(tipo)
 				.score(score)
-				.build(), pegeable).map(p -> pessoaMapper.buildPessoaResponseDTO(p));
+				.build(), pegeable).map(pessoaMapper::buildPessoaResponseDTO);
 	}
 
-	public PessoaResponseDTO cadastrarPessoa(PessoaRequestDTO pessoaRequest) {
+	public PessoaResponseDTO save(PessoaRequestDTO pessoaRequest) {
 		final var pessoa = repository.save(pessoaMapper.buildPessoa(pessoaRequest)
-				.withTipo(tipoPessoa(pessoaRequest.getCpfCnpj()))
-				.withScore(scoreUtils.score())
-				.withStatusContaCorrente(StatusEnum.PENDING)
-				.withStatusProdutos(StatusEnum.PENDING)
-				);
+					.withTipo(tipoPessoa(pessoaRequest.getCpfCnpj()))
+					.withScore(scoreUtils.score())
+					.withStatusContaCorrente(StatusEnum.PENDING)
+					.withStatusProdutos(StatusEnum.PENDING)
+					);
+
+			brokerOutbound.contaCorrentePublish(pessoa);
 		
-		brokerOutbound.contaCorrentePublish(pessoa);
 		return pessoaMapper.buildPessoaResponseDTO(pessoa);
 	}
 
@@ -56,11 +57,11 @@ public class PessoaService {
 				.map(p -> p.withStatusContaCorrente(StatusEnum.OK))
 				.orElseThrow(() -> new DataBaseException(HttpStatus.NOT_FOUND, "Recurso não encontrado")));
 	}
-	
+
 	public void atualizarContaCorrenteProdutos(PessoaContaCorrenteDTO contaCorrente) {
 		repository.save(repository.findById(contaCorrente.getPessoa())
 				.map(p -> p.withStatusProdutos(StatusEnum.OK)
-					       .withStatusContaCorrente(StatusEnum.OK)
+						.withStatusContaCorrente(StatusEnum.OK)
 						)
 				.orElseThrow(() -> new DataBaseException(HttpStatus.NOT_FOUND, "Recurso não encontrado")));
 	}
