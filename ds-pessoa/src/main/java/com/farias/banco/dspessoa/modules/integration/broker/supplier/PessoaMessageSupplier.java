@@ -25,6 +25,5 @@ public class PessoaMessageSupplier {
 			log.error("Error ao publicar message na exchange [{}]: {}", BrokerConstants.EXCHANGE_CONTA_CORRENTE_CREATED, e.getMessage() );
 		}
 	}
-	
-	
+
 }
