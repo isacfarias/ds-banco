@@ -6,7 +6,7 @@ import org.mapstruct.Mappings;
 
 import com.farias.banco.dspessoa.dto.PessoaRequestDTO;
 import com.farias.banco.dspessoa.dto.PessoaResponseDTO;
-import com.farias.banco.dspessoa.model.Pessoa;
+import com.farias.banco.dspessoa.modules.model.Pessoa;
 
 @Mapper
 public interface PessoaMapper {

@@ -28,7 +28,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.farias.banco.dspessoa.creator.PessoaCreator;
-import com.farias.banco.dspessoa.repository.PessoaRepository;
+import com.farias.banco.dspessoa.modules.repository.PessoaRepository;
 
 @TestMethodOrder(OrderAnnotation.class)
 @ActiveProfiles("test")

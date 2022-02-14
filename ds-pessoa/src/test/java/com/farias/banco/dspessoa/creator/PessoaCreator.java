@@ -2,7 +2,7 @@ package com.farias.banco.dspessoa.creator;
 
 import com.farias.banco.dspessoa.dto.PessoaRequestDTO;
 import com.farias.banco.dspessoa.enums.PessoaTipoEnum;
-import com.farias.banco.dspessoa.model.Pessoa;
+import com.farias.banco.dspessoa.modules.model.Pessoa;
 import static com.farias.banco.dspessoa.constants.MappperConstants.pessoaMapper;
 
 import com.farias.banco.dspessoa.dto.PessoaResponseDTO;

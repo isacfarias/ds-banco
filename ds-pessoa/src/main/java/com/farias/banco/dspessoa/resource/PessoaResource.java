@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.farias.banco.dspessoa.dto.PessoaRequestDTO;
 import com.farias.banco.dspessoa.dto.PessoaResponseDTO;
-import com.farias.banco.dspessoa.handler.StandardError;
+import com.farias.banco.dspessoa.modules.handler.StandardError;
 import com.farias.banco.dspessoa.service.PessoaService;
 
 import io.swagger.annotations.Api;

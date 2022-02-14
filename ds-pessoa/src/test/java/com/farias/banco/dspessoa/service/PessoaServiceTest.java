@@ -1,11 +1,11 @@
 package com.farias.banco.dspessoa.service;
 
-import com.farias.banco.dspessoa.broker.supplier.PessoaMessageSupplier;
+import com.farias.banco.dspessoa.modules.integration.broker.supplier.PessoaMessageSupplier;
 import com.farias.banco.dspessoa.dto.PessoaResponseDTO;
-import com.farias.banco.dspessoa.handler.exception.DataBaseException;
-import com.farias.banco.dspessoa.model.Pessoa;
-import com.farias.banco.dspessoa.repository.PessoaRepository;
-import com.farias.banco.dspessoa.repository.specification.PessoaSpecification;
+import com.farias.banco.dspessoa.modules.handler.exception.DataBaseException;
+import com.farias.banco.dspessoa.modules.model.Pessoa;
+import com.farias.banco.dspessoa.modules.repository.PessoaRepository;
+import com.farias.banco.dspessoa.modules.repository.specification.PessoaSpecification;
 import com.farias.banco.dspessoa.utils.ScoreUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

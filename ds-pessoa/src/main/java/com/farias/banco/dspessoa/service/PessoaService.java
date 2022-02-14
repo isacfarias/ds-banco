@@ -9,16 +9,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import com.farias.banco.dspessoa.broker.supplier.PessoaMessageSupplier;
+import com.farias.banco.dspessoa.modules.integration.broker.supplier.PessoaMessageSupplier;
 import com.farias.banco.dspessoa.constants.PessoaConstants;
 import com.farias.banco.dspessoa.dto.PessoaContaCorrenteDTO;
 import com.farias.banco.dspessoa.dto.PessoaRequestDTO;
 import com.farias.banco.dspessoa.dto.PessoaResponseDTO;
 import com.farias.banco.dspessoa.enums.PessoaTipoEnum;
 import com.farias.banco.dspessoa.enums.StatusEnum;
-import com.farias.banco.dspessoa.handler.exception.DataBaseException;
-import com.farias.banco.dspessoa.repository.PessoaRepository;
-import com.farias.banco.dspessoa.repository.specification.PessoaSpecification;
+import com.farias.banco.dspessoa.modules.handler.exception.DataBaseException;
+import com.farias.banco.dspessoa.modules.repository.PessoaRepository;
+import com.farias.banco.dspessoa.modules.repository.specification.PessoaSpecification;
 import com.farias.banco.dspessoa.utils.ScoreUtils;
 
 import lombok.RequiredArgsConstructor;
