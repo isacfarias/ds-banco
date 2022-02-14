@@ -13,8 +13,8 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.ActiveProfiles;
 
 import com.farias.banco.dscontacorrente.enums.ContaTipo;
-import com.farias.banco.dscontacorrente.model.ContaCorrente;
-import com.farias.banco.dscontacorrente.model.Pessoa;
+import com.farias.banco.dscontacorrente.modules.model.ContaCorrente;
+import com.farias.banco.dscontacorrente.modules.model.Pessoa;
 
 
 @TestMethodOrder(OrderAnnotation.class)

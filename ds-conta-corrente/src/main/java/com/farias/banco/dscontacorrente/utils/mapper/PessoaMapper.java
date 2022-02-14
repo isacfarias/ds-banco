@@ -4,7 +4,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import com.farias.banco.dscontacorrente.dto.PessoaContaCorrenteResponseDTO;
-import com.farias.banco.dscontacorrente.model.Pessoa;
+import com.farias.banco.dscontacorrente.modules.model.Pessoa;
 
 @Mapper
 public interface PessoaMapper {

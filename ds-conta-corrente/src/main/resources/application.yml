@@ -13,6 +13,8 @@ spring:
     virtualhost: /
     
   cloud:
+    function:
+      definition: subscribeContaCorrenteCreated;publishContaCorrenteProcessed;publishProdutosContaCorrenteCreated;publishContaCorrenteCreated
     stream:
       binders:
         rabbitMQ:
@@ -23,35 +25,42 @@ spring:
           destination: springCloudBus
           group: q-cloudbus-ds-conta-corrente
                 
-        subscribeContaCorrenteCreated:
+        subscribeContaCorrenteCreated-in-0:
           destination: x-conta-corrente-created
           group: q-conta-corrente-created
           consumer:
             maxAttempts: 1
 
-        publishContaCorrenteProcessed:
+        publishContaCorrenteCreated-out-0:
+          destination: x-conta-corrente-processed
+
+        publishContaCorrenteProcessed-out-0:
           destination: x-conta-corrente-processed
           
-        publishProdutosContaCorrenteCreated:
+        publishProdutosContaCorrenteCreated-out-0:
           destination: x-produtos-conta-corrente-created
 
       rabbit:
         bindings:
-          subscribeContaCorrenteCreated:
+          subscribeContaCorrenteCreated-in-0:
             consumer:
               exchangeType: fanout
               autoBindDlq: true
               republishToDlq: true
               requeueRejected: false
-              
 
-          publishContaCorrenteProcessed:
+          publishContaCorrenteCreated-out-0:
+            producer:
+              exchangeType: fanout
+
+          publishContaCorrenteProcessed-out-0:
             producer:
               exchangeType: fanout
               
-          publishProdutosContaCorrenteCreated:
+          publishProdutosContaCorrenteCreated-out-0:
             producer:
-              exchangeType: fanout              
+              exchangeType: fanout
+
   jpa:
     open-in-view: false
 

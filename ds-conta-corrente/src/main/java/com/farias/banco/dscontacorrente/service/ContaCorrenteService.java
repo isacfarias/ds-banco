@@ -11,17 +11,17 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import com.farias.banco.dscontacorrente.broker.outbound.ContaCorrenteBrokerOutbound;
-import com.farias.banco.dscontacorrente.config.app.AppConfig;
+import com.farias.banco.dscontacorrente.modules.integration.broker.supplier.ContaCorrenteMessageSupplier;
+import com.farias.banco.dscontacorrente.modules.config.app.AppConfig;
 import com.farias.banco.dscontacorrente.dto.ContaCorrenteResponseDTO;
 import com.farias.banco.dscontacorrente.dto.ContaCorrenteProdutoDTO;
 import com.farias.banco.dscontacorrente.enums.ContaTipo;
 import com.farias.banco.dscontacorrente.enums.PessoaTipoEnum;
-import com.farias.banco.dscontacorrente.feignclients.ContaCorrenteProdutosFeignClients;
-import com.farias.banco.dscontacorrente.model.ContaCorrente;
-import com.farias.banco.dscontacorrente.model.Pessoa;
-import com.farias.banco.dscontacorrente.repository.ContaCorrenteRepository;
-import com.farias.banco.dscontacorrente.repository.specification.ContaCorrenteSpecification;
+import com.farias.banco.dscontacorrente.modules.integration.feign.ContaCorrenteProdutosFeignClients;
+import com.farias.banco.dscontacorrente.modules.model.ContaCorrente;
+import com.farias.banco.dscontacorrente.modules.model.Pessoa;
+import com.farias.banco.dscontacorrente.modules.repository.ContaCorrenteRepository;
+import com.farias.banco.dscontacorrente.modules.repository.specification.ContaCorrenteSpecification;
 import com.farias.banco.dscontacorrente.utils.ContaCorrenteNumeroUtils;
 
 import lombok.RequiredArgsConstructor;
@@ -39,7 +39,7 @@ public class ContaCorrenteService {
 	private final ContaCorrenteRepository repository;
 	private final ContaCorrenteProdutosFeignClients contaCorrenteProdutosFeignClients;
 	private final ContaCorrenteNumeroUtils contaNumero;
-	private final ContaCorrenteBrokerOutbound outbound;
+	private final ContaCorrenteMessageSupplier outbound;
 
 	public ContaCorrente cadastrarContaCorrente(Pessoa pessoa) {
 		final var account = repository.save(ContaCorrente.builder()
