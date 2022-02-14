@@ -1,6 +1,6 @@
 package com.farias.banco.dspessoa.service;
 
-import com.farias.banco.dspessoa.broker.outbound.PessoaBrokerOutbound;
+import com.farias.banco.dspessoa.broker.supplier.PessoaMessageSupplier;
 import com.farias.banco.dspessoa.dto.PessoaResponseDTO;
 import com.farias.banco.dspessoa.handler.exception.DataBaseException;
 import com.farias.banco.dspessoa.model.Pessoa;
@@ -36,7 +36,7 @@ public class PessoaServiceTest {
 	@Mock
 	private ScoreUtils scoreUtils;
 	@Mock
-	private PessoaBrokerOutbound brokerOutbound;
+	private PessoaMessageSupplier brokerOutbound;
 
 	private final Pessoa pessoaSaved = createSavedPF();
 	private final PessoaResponseDTO pessoaResponseExpected = createPFtoDTO();

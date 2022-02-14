@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import com.farias.banco.dspessoa.broker.outbound.PessoaBrokerOutbound;
+import com.farias.banco.dspessoa.broker.supplier.PessoaMessageSupplier;
 import com.farias.banco.dspessoa.constants.PessoaConstants;
 import com.farias.banco.dspessoa.dto.PessoaContaCorrenteDTO;
 import com.farias.banco.dspessoa.dto.PessoaRequestDTO;
@@ -29,7 +29,7 @@ public class PessoaService {
 
 	private final PessoaRepository repository;
 	private final ScoreUtils scoreUtils;
-	private final PessoaBrokerOutbound brokerOutbound;
+	private final PessoaMessageSupplier brokerOutbound;
 
 	public Page<PessoaResponseDTO> findAll(final Optional<String> nome, final  Optional<String> tipo, final Optional<Integer> score, final Pageable pegeable) {
 		return repository.findAll(PessoaSpecification.builder()

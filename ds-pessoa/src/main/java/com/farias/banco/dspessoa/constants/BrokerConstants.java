@@ -15,8 +15,8 @@ public interface BrokerConstants {
 	/**
 	 * Nome do metodo criado no contexto do spring @Bean
 	 */
-	String EXCHANGE_CONTA_CORRENTE_CREATED             = "publishContaCorrenteCreated";
-	String EXCHANGE_CONTA_CORRENTE_PROCESSED           = "subcribeContaCorrenteProcessed";
-	String EXCHANGE_PRODUTOS_CONTA_CORRENTE_PROCESSED  = "subcribeProdutosContaCorrenteProcessed";
+	String EXCHANGE_CONTA_CORRENTE_CREATED             = "publishContaCorrenteCreated-out-0";
+	String EXCHANGE_CONTA_CORRENTE_PROCESSED           = "subcribeContaCorrenteProcessed-in-0";
+	String EXCHANGE_PRODUTOS_CONTA_CORRENTE_PROCESSED  = "subcribeProdutosContaCorrenteProcessed-in-0";
 
 }
