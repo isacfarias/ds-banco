@@ -5,6 +5,7 @@ import com.farias.banco.dscontacorrenteprodutos.service.ContaCorrenteProdutosSer
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 
@@ -16,7 +17,8 @@ public class MessageConsumer {
 	private final ObjectMapper mapper;
 	private final ContaCorrenteProdutosService service;
 
-	public ProdutosContaCorrenteCreatedConsumer subcribeContaCorrenteCreated() {
+	@Bean
+	public ProdutosContaCorrenteCreatedConsumer subscribeProdutosContaCorrenteCreated() {
 		return new ProdutosContaCorrenteCreatedConsumer(mapper, service);
 	}
 

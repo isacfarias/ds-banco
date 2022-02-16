@@ -1,13 +1,14 @@
 package com.farias.banco.dspessoa.modules.integration.broker.supplier.impls;
 
-import com.farias.banco.dspessoa.constants.BrokerConstants;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.messaging.Message;
-import org.springframework.messaging.support.MessageBuilder;
-
 import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.function.Supplier;
+
+import org.springframework.messaging.Message;
+
+import com.farias.banco.dspessoa.constants.BrokerConstants;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class ContaCorrenteCreatedSupplier implements Supplier<Message<String>> {
