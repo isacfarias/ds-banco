@@ -1,0 +1,15 @@
+# Database configuration
+spring:
+  datasource:
+    url: jdbc:h2:mem:ds-produtos
+    name: sa
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true

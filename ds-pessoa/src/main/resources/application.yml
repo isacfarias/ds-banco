@@ -1,0 +1,103 @@
+spring:
+  application:
+    name: ds-pessoa
+  profiles:
+    active: dev
+  rabbitmq:
+    addresses: localhost:5672
+    username: ds-banco
+    password: ABC_BANCO
+    virtualhost: /
+
+  cloud:
+    function:
+      definition: subscribedContaCorrenteProcessed;subscribedProdutosContaCorrenteProcessed;publishContaCorrenteCreated;publishContaCorrenteProcessed;publishProdutosContaCorrenteProcessed
+
+    stream:
+      binders:
+        rabbitMQ:
+          type: rabbit
+          
+      bindings:
+        springcloudbusinput: 
+          destination: springCloudBus
+          group: q-cloudbus-pessoa
+          
+        subscribedContaCorrenteProcessed-in-0:
+          destination: x-conta-corrente-processed
+          group: q-conta-corrente-processed
+          consumer:
+            maxAttempts: 1
+#
+        subscribedProdutosContaCorrenteProcessed-in-0:
+          destination: x-produtos-conta-corrente-processed
+          group: q-produtos-conta-corrente-processed
+          consumer:
+            maxAttempts: 1
+
+        publishContaCorrenteCreated-out-0:
+          destination: x-conta-corrente-created
+
+        publishContaCorrenteProcessed-out-0:
+          destination: x-conta-corrente-processed
+
+        publishProdutosContaCorrenteProcessed-out-0:
+          destination: x-produtos-conta-corrente-processed
+
+      rabbit:
+        bindings:
+          subcribeContaCorrenteProcessed-in-0:
+            consumer:
+              exchangeType: fanout
+              autoBindDlq: true
+              republishToDlq: true
+              requeueRejected: false
+#
+          subcribeProdutosContaCorrenteProcessed-in-0:
+            consumer:
+              exchangeType: fanout
+              autoBindDlq: true
+              republishToDlq: true
+              requeueRejected: false
+
+          publishContaCorrenteCreated-out-0:
+            producer:
+              exchangeType: fanout
+
+          publishContaCorrenteProcessed-out-0:
+            producer:
+              exchangeType: fanout
+
+          publishProdutosContaCorrenteProcessed-out-0:
+            producer:
+              exchangeType: fanout
+
+  jpa:
+    open-in-view: false
+server:
+  port: ${PORT:0}
+  
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+#
+#hystrix:
+#  command:
+#    default:
+#      execution:
+#        isolation:
+#         thread: 
+#           timeoutInMilliseconds: 60000
+#ribbon: 
+#  ConnectTimeout: 10000
+#  ReadTimeout: 20000
+  
+
+
+
+              
+  
+          

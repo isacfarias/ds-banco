@@ -11,21 +11,28 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.farias.banco.dsprodutos.resources.ProdutosFaixaResource;
+import com.farias.banco.dsprodutos.service.ProdutosFaixaService;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.With;
+
+@Getter
+@Builder
+@With
 @Entity
+@NoArgsConstructor(staticName = "of")
+@AllArgsConstructor(staticName = "of")
 @Table(name = "produtofaixa")
 public class ProdutoFaixa {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "prof_id")
-	private Integer id;
+	private Long id;
 	
 	@ManyToOne
 	@JoinColumn(name = "prodt_id")

@@ -1,14 +1,17 @@
 package com.farias.banco.dscontacorrente.dto;
 
+import lombok.*;
+
 import java.math.BigDecimal;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import io.swagger.annotations.ApiModel;
 
-@Data
+@Getter
+@Builder
+@With
 @NoArgsConstructor
 @AllArgsConstructor
+@ApiModel(value = "ContaCorrenteProduto")
 public class ContaCorrenteProdutoDTO {
 	
 	private String produto;

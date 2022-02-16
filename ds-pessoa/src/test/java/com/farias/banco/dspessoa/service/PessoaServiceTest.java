@@ -1,84 +1,112 @@
 package com.farias.banco.dspessoa.service;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import com.farias.banco.dspessoa.modules.integration.broker.supplier.PessoaMessageSupplier;
+import com.farias.banco.dspessoa.dto.PessoaResponseDTO;
+import com.farias.banco.dspessoa.modules.handler.exception.DataBaseException;
+import com.farias.banco.dspessoa.modules.model.Pessoa;
+import com.farias.banco.dspessoa.modules.repository.PessoaRepository;
+import com.farias.banco.dspessoa.modules.repository.specification.PessoaSpecification;
+import com.farias.banco.dspessoa.utils.ScoreUtils;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
+import java.util.Optional;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.ActiveProfiles;
-
-import com.farias.banco.dspessoa.feignclients.ContaCorrenteFeignClients;
-import com.farias.banco.dspessoa.model.Pessoa;
-import com.farias.banco.dspessoa.repository.PessoaRepository;
-
-/**
- * 
- * Os CPF usados foram obtidos aleatoriamente no https://www.4devs.com.br/gerador_de_cpf
- * portanto nenhum confere com o nome, pelo deveria ser assim.
- * 
- * @author farias
- *
- */
+import static com.farias.banco.dspessoa.creator.PessoaCreator.*;
+import static com.farias.banco.dspessoa.creator.PessoaContaCorrenteCreator.*;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 @ActiveProfiles("test")
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@ExtendWith(SpringExtension.class)
 public class PessoaServiceTest {
-
-	@Autowired
-	private PessoaRepository repository;
-	
-	@MockBean
-	private ContaCorrenteFeignClients contaCorrenteFeignClients;
-	
-	@Autowired
+	@InjectMocks
 	private PessoaService service;
-	
-	@BeforeEach
-	void setUp() throws Exception {
-		repository.deleteAll();
-	}
-	
+	@Mock
+	private PessoaRepository repository;
+	@Mock
+	private ScoreUtils scoreUtils;
+	@Mock
+	private PessoaMessageSupplier brokerOutbound;
+
+	private final Pessoa pessoaSaved = createSavedPF();
+	private final PessoaResponseDTO pessoaResponseExpected = createPFtoDTO();
+	private final Optional<String> filterNome = Optional.of(pessoaResponseExpected.getNome());
+	private final Optional<String> filterTipo = Optional.of("PF");
+	private final Optional<Integer> filterScore = Optional.of(4);
+	private final PageRequest pageResquest = PageRequest.of(0, 10, Sort.by(Sort.Direction.ASC, "nome"));
+
 	@Test
-	void deveValidarSeABaseEstaVazia_returnaTrue_quandoForVerdadeiro() {
-		List<Pessoa> list = repository.findAll();
-		assertTrue(list.isEmpty());
+	void findAllShouldReturnPessoaResponse() {
+		when(repository.findAll(any(PessoaSpecification.class), any(PageRequest.class))).thenReturn(new PageImpl<>(List.of(pessoaSaved)));
+		final var result = service.findAll(filterNome, filterTipo, filterScore, pageResquest).getContent();
+
+		assertNotNull(result);
+		final var content = result.get(0);
+		assertEquals(pessoaResponseExpected.getNome(), content.getNome());
+		assertEquals(pessoaResponseExpected.getCpfCnpj(), content.getCpfCnpj());
+		assertEquals(pessoaResponseExpected.getTipo(), content.getTipo());
 	}
-	
+
 	@Test
-	void deveCriarCadastroDoTipoPF_returnaTrue_quandoForVerdadeiro() {
-		Pessoa pessoaFisica = new Pessoa();
-		pessoaFisica.setNome("Jośe Valadares");
-		pessoaFisica.setCpfCnpj("47280738079");
-		
-		pessoaFisica = service.cadastrarPessoa(pessoaFisica);
-		assertTrue(pessoaFisica.getTipo().equals("PF"));
+	void saveShouldReturnPessoaWhenCPFIsValid() {
+		final var pessoaSave = createPF();
+		when(repository.save(any())).thenReturn(createSavedPF());
+		final var pessoaDTOResponse = service.save(createRequestPF());
+		assertEquals("PF", pessoaDTOResponse.getTipo());
+		verify(repository, times(1)).save(any());
 	}
-	
+
 	@Test
-	void deveCriarCadastroDoTipoPJ_returnaTrue_quandoForVerdadeiro() {
-		
-		Pessoa pessoaFisica = new Pessoa();
-		pessoaFisica.setNome("Gomas & Dias - ME");
-		pessoaFisica.setCpfCnpj("87320652000191");
-		
-		pessoaFisica = service.cadastrarPessoa(pessoaFisica);
-		assertTrue(pessoaFisica.getTipo().equals("PJ"));
+	void saveShouldReturnPessoaWhenCNPJIsValid() {
+		final var pessoaSave = createPJ();
+		when(repository.save(any())).thenReturn(createSavedPJ());
+		final var pessoaDTOResponse = service.save(createRequestPJ());
+		assertEquals("PJ", pessoaDTOResponse.getTipo());
+		verify(repository, times(1)).save(any());
 	}
-	
+
 	@Test
-	void deveCriarCadastroComScoreEnte0e9_returnaTrue_quandoForVerdadeiro() {
-		Pessoa pessoaFisica = new Pessoa();
-		pessoaFisica.setNome("Asdrubaldo Ferro");
-		pessoaFisica.setCpfCnpj("25661236085");
-		
-		pessoaFisica = service.cadastrarPessoa(pessoaFisica);
-		assertTrue(pessoaFisica.getScore() > 0);
-		assertTrue(pessoaFisica.getScore() < 9);
+	void updateShouldUpdatedStatusContaCorrenteWhenDataIsValid() {
+		final var pessoaContaCorrenteUpdate = createPessoaContaCorrenteDTO();
+		when(repository.findById(pessoaContaCorrenteUpdate.getPessoa())).thenReturn(Optional.of(createSavedPF()));
+		when(repository.save(any())).thenReturn(createUpdatedContaCorrentePF());
+		service.atualizarContaCorrente(pessoaContaCorrenteUpdate);
+		verify(repository, times(1)).save(any());
 	}
+
+	@Test
+	void updateShouldUpdatedStatusProdutoWhenDataIsValid() {
+		final var pessoaContaCorrenteUpdate = createPessoaContaCorrenteDTO();
+		when(repository.findById(pessoaContaCorrenteUpdate.getPessoa())).thenReturn(Optional.of(createSavedPF()));
+		when(repository.save(any())).thenReturn(createUpdatedProdutosPF());
+		service.atualizarContaCorrenteProdutos(pessoaContaCorrenteUpdate);
+		verify(repository, times(1)).save(any());
+	}
+
+	@Test
+	void updateContaCorrenteShouldExceptionWhenContaCorrenteIsNotExists() {
+		final var pessoaContaCorrenteUpdate = createPessoaContaCorrenteDTO();
+		when(repository.findById(pessoaContaCorrenteUpdate.getPessoa())).thenThrow(new DataBaseException(HttpStatus.NOT_FOUND, "Recurso não encontrado"));
+		assertThrows(DataBaseException.class, () -> service.atualizarContaCorrente(pessoaContaCorrenteUpdate));
+	}
+
+	@Test
+	void updateProdutoShouldExceptionWhenContaCorrenteIsNotExists() {
+		final var pessoaContaCorrenteUpdate = createPessoaContaCorrenteDTO();
+		when(repository.findById(pessoaContaCorrenteUpdate.getPessoa())).thenThrow(new DataBaseException(HttpStatus.NOT_FOUND, "Recurso não encontrado"));
+		assertEquals(HttpStatus.NOT_FOUND ,assertThrows(DataBaseException.class, () -> service.atualizarContaCorrenteProdutos(pessoaContaCorrenteUpdate)).getStatus());
+	}
+
+
 
 }

@@ -1,70 +1,83 @@
 package com.farias.banco.dscontacorrenteprodutos.service;
 
+import static com.farias.banco.dscontacorrenteprodutos.contants.ContaCorrenteConstants.PROD_CARTAO_CREDITO;
+import static com.farias.banco.dscontacorrenteprodutos.contants.MapperConstants.contaCorrenteMapper;
+
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import com.farias.banco.dscontacorrenteprodutos.contants.ContaCorrenteConstants;
+import com.farias.banco.dscontacorrenteprodutos.modules.integration.broker.supplier.ProdutosContaCorrenteMessageSupplier;
 import com.farias.banco.dscontacorrenteprodutos.dto.ContaCorrenteProdutoDTO;
 import com.farias.banco.dscontacorrenteprodutos.dto.PessoaContaCorrenteDTO;
-import com.farias.banco.dscontacorrenteprodutos.dto.ProdutosDTO;
-import com.farias.banco.dscontacorrenteprodutos.feignclients.ProdutosFeignClient;
-import com.farias.banco.dscontacorrenteprodutos.model.ContaCorrenteProdutos;
-import com.farias.banco.dscontacorrenteprodutos.repository.ContaCorrenteProdutosRepository;
+import com.farias.banco.dscontacorrenteprodutos.modules.integration.feign.ProdutosFeignClient;
+import com.farias.banco.dscontacorrenteprodutos.modules.model.ContaCorrenteProdutos;
+import com.farias.banco.dscontacorrenteprodutos.modules.repository.ContaCorrenteProdutosRepository;
+import com.farias.banco.dscontacorrenteprodutos.modules.repository.specification.ContaCorrenteProdutosSpecification;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class ContaCorrenteProdutosService {
 
 	private final Logger LOG = LoggerFactory.getLogger(ContaCorrenteProdutosService.class);
 
-	@Autowired
-	private ContaCorrenteProdutosRepository repository;
-
-	@Autowired
-	private ProdutosFeignClient produtosScoreFeignClient;
-
+	private final ContaCorrenteProdutosRepository repository;
+	private final ProdutosFeignClient produtosScoreFeignClient;
+	private final ProdutosContaCorrenteMessageSupplier outbound;
 
 	public void vincularProdutosContaCorrente(PessoaContaCorrenteDTO pessoaContaCorrente) {
-		List<ProdutosDTO> produtos = null;
-		
 		try {
-			produtos = produtosScoreFeignClient.produtosPorScore(pessoaContaCorrente.getScore()).getBody();
-		} catch (Exception e) {
-			LOG.error("O serviço [ds-produtos] de produtos esta Off.", e.getMessage());
-		}
-
-		ContaCorrenteProdutos contaCorrenteProdutos;
-		for (ProdutosDTO produto : produtos) {
-
-			if (produto.getProduto().equals(ContaCorrenteConstants.PROD_CARTAO_CREDITO)
-					&& produto.getValor().compareTo(new BigDecimal(0.0)) <= 0 ) continue;
+			Objects.requireNonNull(produtosScoreFeignClient.produtosPorScore(pessoaContaCorrente.getScore()).getBody())
+			.stream()
+			.filter( produto -> !(produto.getProduto().equals(PROD_CARTAO_CREDITO)
+					&& produto.getValor().compareTo(new BigDecimal("0.0")) <= 0 ))
+			.forEach(produto -> 
+			         repository.save(contaCorrenteMapper.buildContaCorrenteProdutos(produto)
+					.withContaCorrente(pessoaContaCorrente.getContaCorrente())
+					));
 			
-			contaCorrenteProdutos = new ContaCorrenteProdutos();
-			contaCorrenteProdutos.setContaCorrente(pessoaContaCorrente.getContaCorrente());
-			contaCorrenteProdutos.setProdutoTipo(produto.getProduto());
-			contaCorrenteProdutos.setAtivo( ( produto.getValor().compareTo(new BigDecimal(0.0)) == 1 ? 1: 0 ) );
-			contaCorrenteProdutos.setValor(produto.getValor());
+			outbound.publishProdutosContaCorrenteProcessed(pessoaContaCorrente);
 
-			repository.save(contaCorrenteProdutos);
+		} catch (Exception e) {
+			LOG.error("O serviço [ds-produtos] de produtos esta Off.", e.getMessage());
 		}
 	}
 
-	public List<ContaCorrenteProdutoDTO> searchProdutosContaCorrente(Long contaCorrenteId) {
-		List<ContaCorrenteProdutoDTO> contaCorrenteprodutos = null;
-		List<ContaCorrenteProdutos> produtos = repository.findByContaCorrente(contaCorrenteId);
+	public Page<List<ContaCorrenteProdutoDTO>> findAll(final Optional<Long> id, final Optional<Long> contaCorrente, final Optional<Integer> ativo, final Optional<Long> produtoTipo, PageRequest pageable) {
+		return repository.findAll(ContaCorrenteProdutosSpecification.builder()
+				.id(id)
+				.ativo(ativo)
+				.contaCorrente(contaCorrente)
+				.produtoTipo(produtoTipo)
+				.build(), pageable).map(this::buildDTO);
+	}
+
+	private List<ContaCorrenteProdutoDTO> buildDTO(ContaCorrenteProdutos contaCorrenteProdutos) {
+		List<ContaCorrenteProdutoDTO> produtos = null;
 		try {
-			contaCorrenteprodutos = produtos.stream()
-					.map(contaCorrenteProduto -> new ContaCorrenteProdutoDTO(produtosScoreFeignClient.produto(contaCorrenteProduto.getProdutoTipo()).getBody().getDescricao(), contaCorrenteProduto.getValor()))
+			produtos = produtosScoreFeignClient.produto(contaCorrenteProdutos.getProdutoTipo(), PageRequest.of(0, 10)).getContent()
+					.stream()
+					.filter(Objects:: nonNull)
+					.map(c -> contaCorrenteMapper.buildContaCorrenteProdutosDTO(c)
+							.withLimite(contaCorrenteProdutos.getValor()) )
 					.collect(Collectors.toList());
+
+
 		} catch (Exception e) {
 			LOG.error("O serviço [ds-produtos] de produtos esta Off.", e.getMessage());
 		}
 
-		return contaCorrenteprodutos;
+		return produtos; 
 	}
+
 }
