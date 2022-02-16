@@ -62,7 +62,7 @@ public class ContaCorrenteProdutosService {
 				.build(), pageable).map(this::buildDTO);
 	}
 
-	public List<ContaCorrenteProdutoDTO> buildDTO(ContaCorrenteProdutos contaCorrenteProdutos) {
+	private List<ContaCorrenteProdutoDTO> buildDTO(ContaCorrenteProdutos contaCorrenteProdutos) {
 		List<ContaCorrenteProdutoDTO> produtos = null;
 		try {
 			produtos = produtosScoreFeignClient.produto(contaCorrenteProdutos.getProdutoTipo(), PageRequest.of(0, 10)).getContent()
