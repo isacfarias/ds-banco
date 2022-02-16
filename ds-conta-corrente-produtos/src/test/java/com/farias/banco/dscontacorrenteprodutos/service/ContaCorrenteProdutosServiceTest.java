@@ -16,8 +16,8 @@ import org.springframework.test.context.ActiveProfiles;
 import com.farias.banco.dscontacorrenteprodutos.contants.ContaCorrenteConstants;
 import com.farias.banco.dscontacorrenteprodutos.dto.PessoaContaCorrenteDTO;
 import com.farias.banco.dscontacorrenteprodutos.dto.ProdutosDTO;
-import com.farias.banco.dscontacorrenteprodutos.model.ContaCorrenteProdutos;
-import com.farias.banco.dscontacorrenteprodutos.repository.ContaCorrenteProdutosRepository;
+import com.farias.banco.dscontacorrenteprodutos.modules.model.ContaCorrenteProdutos;
+import com.farias.banco.dscontacorrenteprodutos.modules.repository.ContaCorrenteProdutosRepository;
 
 
 

@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,13 +15,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import com.farias.banco.dscontacorrenteprodutos.broker.outbound.ProdutosContaCorrenteBrokerOutbound;
+import com.farias.banco.dscontacorrenteprodutos.modules.integration.broker.supplier.ProdutosContaCorrenteMessageSupplier;
 import com.farias.banco.dscontacorrenteprodutos.dto.ContaCorrenteProdutoDTO;
 import com.farias.banco.dscontacorrenteprodutos.dto.PessoaContaCorrenteDTO;
-import com.farias.banco.dscontacorrenteprodutos.feignclients.ProdutosFeignClient;
-import com.farias.banco.dscontacorrenteprodutos.model.ContaCorrenteProdutos;
-import com.farias.banco.dscontacorrenteprodutos.repository.ContaCorrenteProdutosRepository;
-import com.farias.banco.dscontacorrenteprodutos.repository.specification.ContaCorrenteProdutosSpecification;
+import com.farias.banco.dscontacorrenteprodutos.modules.integration.feign.ProdutosFeignClient;
+import com.farias.banco.dscontacorrenteprodutos.modules.model.ContaCorrenteProdutos;
+import com.farias.banco.dscontacorrenteprodutos.modules.repository.ContaCorrenteProdutosRepository;
+import com.farias.banco.dscontacorrenteprodutos.modules.repository.specification.ContaCorrenteProdutosSpecification;
 
 import lombok.RequiredArgsConstructor;
 
@@ -32,7 +33,7 @@ public class ContaCorrenteProdutosService {
 
 	private final ContaCorrenteProdutosRepository repository;
 	private final ProdutosFeignClient produtosScoreFeignClient;
-	private final ProdutosContaCorrenteBrokerOutbound outbound;
+	private final ProdutosContaCorrenteMessageSupplier outbound;
 
 	public void vincularProdutosContaCorrente(PessoaContaCorrenteDTO pessoaContaCorrente) {
 		try {
@@ -69,7 +70,7 @@ public class ContaCorrenteProdutosService {
 					.filter(Objects:: nonNull)
 					.map(c -> contaCorrenteMapper.buildContaCorrenteProdutosDTO(c)
 							.withLimite(contaCorrenteProdutos.getValor()) )
-					.toList();
+					.collect(Collectors.toList());
 
 
 		} catch (Exception e) {

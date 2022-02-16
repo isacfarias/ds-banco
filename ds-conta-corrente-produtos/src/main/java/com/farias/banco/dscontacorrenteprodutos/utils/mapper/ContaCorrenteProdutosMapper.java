@@ -10,7 +10,7 @@ import com.farias.banco.dscontacorrenteprodutos.contants.ContaCorrenteConstants;
 import com.farias.banco.dscontacorrenteprodutos.dto.ContaCorrenteProdutoDTO;
 import com.farias.banco.dscontacorrenteprodutos.dto.ProdutosDTO;
 import com.farias.banco.dscontacorrenteprodutos.dto.ProdutosTipoDTO;
-import com.farias.banco.dscontacorrenteprodutos.model.ContaCorrenteProdutos;
+import com.farias.banco.dscontacorrenteprodutos.modules.model.ContaCorrenteProdutos;
 
 @Mapper(imports = {BigDecimal.class, ContaCorrenteConstants.class})
 public interface ContaCorrenteProdutosMapper {
