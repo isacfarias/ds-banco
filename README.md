@@ -1,6 +1,6 @@
 # Projeto ds-banco
 
-O projeto ds-banco vem com a ideia de consolidar conhecimentos adquidos em minhas experiencias de trabalho, bem como implementar novas features do spring;,
+O projeto ds-banco vem com a ideia de consolidar conhecimentos adquidos em minhas experiencias de trabalho, bem como implementar novas features do spring,
 portanto pode ter coisa que não faça sentido, mas foi uma forma de explorar a ideia, e aplicar o maximo de recurso possivel.
 
 ## Tecnologias
