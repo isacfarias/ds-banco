@@ -53,3 +53,12 @@ Para deixamos as coisas mais emocionantes, foi implementado um serviço só para
 Temos os microsservicos 
 - ds-apigateway-zull que serve para identifcar nossas rotas
 - ds-eureka-serve que faz o registro do nossos micro serviços de forma que não precisamos identificar em qual porta eles estão sendo executado;
+
+
+# Quer testar os aplicativos
+
+Nesse caso você precisa fazer o clone do mono repo acima, e pode importar eles na sua IDE de preferencia, ou pode compilar os .jar com maven e gerar as imagens docker e posteriormente subir todo mundo com o docker componse, complicado, segue os passos abaixo;
+
+- ds-pesssoa
+  - caso tenha o maven intalado na maquina mas dentro do diretŕio do projeto na linha de comando executar *mvn package*, caso não tenha maven intalado, pode usar os recurso da IDE para gerar o arquivo .jar;
+  - feito isso agora é hora de gerar nossa imagem docker, na linha de comando execute *docker build -t ds-pessoa .*
