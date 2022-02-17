@@ -14,7 +14,7 @@ esse projeto usa:
 - Spring cloud 2020.0.3
 - Feing
 - Eureka Server/Cliente
-- zuolApi Gatway
+- zuulApi Gatway
 - RabbitMQ
 - Lombook
 - MapStrucs
