@@ -61,6 +61,8 @@ Nesse caso você precisa fazer o clone do mono repo acima, e importar eles na ID
 
 Caso tenha o maven intalado na maquina mas dentro do diretŕio do projeto na linha de comando executar *mvn package*, caso não tenha maven intalado, pode usar os recurso da IDE para gerar o arquivo .jar;
 
+lembre -se todos os comandos deve ser executados dentro do diretŕio do projeto expecifico.
+
 ### ds-apigateway-zuul
   - Hora de gerar nossa imagem docker, na linha de comando execute *docker build -t ds-apigateway-zuul .*
 
