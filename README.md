@@ -1,4 +1,5 @@
 # Projeto ds-banco
+[![NPM](https://img.shields.io/npm/l/react)](https://github.com/isacfarias/ds-banco/blob/main/LICENSE)
 
 O projeto ds-banco vem com a ideia de consolidar conhecimentos adquidos em minhas experiencias de trabalho, bem como implementar novas features do spring,
 portanto pode ter coisa que não faça sentido, mas foi uma forma de explorar a ideia, e aplicar o maximo de recurso possivel.
