@@ -48,7 +48,7 @@ Para o vinculo de produtos da conta corrente foi implementado o projto ds-contac
     
 Para deixamos as coisas mais emocionantes, foi implementado um serviço só para produtos
 - ds-produto
-   As faixas de limite poder ser parametrizaveis
+    - As faixas de limite poder ser parametrizaveis
    
 Temos os microsservicos 
 - ds-apigateway-zull que serve para identifcar nossas rotas
@@ -59,7 +59,12 @@ Temos os microsservicos
 
 Nesse caso você precisa fazer o clone do mono repo acima, e importar eles na IDE de preferencia, ou pode compilar os .jar com maven e gerar as imagens docker, que usaremos no nosso arquivo docker-compose, complicado, segue o fio:
 
-Caso tenha o maven intalado na maquina mas dentro do diretŕio do projeto na linha de comando executar *mvn package*, caso não tenha maven intalado, pode usar os recurso da IDE para gerar o arquivo .jar;
+Caso tenha o maven intalado na maquina mas dentro do diretório do projeto na linha de comando executar:
+
+ - *mvn clean package* - nesse caso ele irá limpar o projeto e gerar seu .jar, porem ele irar executar os testes para garantir a compilação
+ - *mvn clean package -DskipTests* - nesse caso ele irá limpar o projeto e gerar seu .jar, porem ele vai pular os testes;
+
+caso não tenha maven intalado, pode usar os recurso da IDE para gerar o arquivo .jar;
 
 lembre -se todos os comandos deve ser executados dentro do diretŕio do projeto expecifico.
 
