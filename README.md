@@ -4,6 +4,8 @@
 O projeto ds-banco vem com a ideia de consolidar conhecimentos adquidos em minhas experiencias de trabalho, bem como implementar novas features do spring,
 portanto pode ter coisa que não faça sentido, mas foi uma forma de explorar a ideia, e aplicar o maximo de recurso possivel.
 
+![Modelo Conceitual](https://github.com/isacfarias/ds-banco/blob/feature/rabbitmq_functions/assets/ds-banco-diagrama.png)
+
 ## Tecnologias
 
 esse projeto usa:
