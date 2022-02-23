@@ -68,13 +68,19 @@ No seu terminal execute os comandos abaixo:
  - *mvn clean package* - nesse caso ele irá limpar o projeto e gerar seu .jar, porem ele irar executar os testes para garantir a compilação
  - *mvn clean package -DskipTests* - nesse caso ele irá limpar o projeto e gerar seu .jar, porem ele vai pular os testes;
 
- Como estamos usando o plugin com.spotify, ao realizar o empacotamento com o maven já teremos nossas imagens docker prontas para usar no docker-compose, ao finalizar o processo de gerar as imagens docker, é hora de subir os microsserviçoes, temos o docker-compose todo configurado agora é executar o 
- 
- comando:
+ Como estamos usando o plugin com.spotify, ao realizar o empacotamento com o maven, já teremos nossas imagens docker prontas para usar no docker-compose, ao finalizar o processo de gerar as imagens docker,
+ [docker-images](https://github.com/isacfarias/ds-banco/blob/feature/rabbitmq_functions/assets/docker-images.png)
+
+ Com o processo de gerar as imagens finalizado é hora de subir os microsserviçoes, temos o docker-compose todo configurado, sendo necessário é executar o comando:
  - docker-compose up -d
 
+ [docker-compose](https://github.com/isacfarias/ds-banco/blob/feature/rabbitmq_functions/assets/docker-compose.png)
+
 Com isso teremos os serviços rabbitMQ, gateway, eureka-server, pessoa, conta-corrente, conta-corrente-produtos, produtos.
-
 Feito isso já é possivel ver os serviços online: http://localhost:8761/
-Caso queira conhecer os endpoint disponivel e o modelo de dados: http://localhost:8765/swagger-ui/
+[eureka-server](https://github.com/isacfarias/ds-banco/blob/feature/rabbitmq_functions/assets/eureka-server.png)
 
+
+Caso queira conhecer os endpoint disponivel e o modelo de dados: http://localhost:8765/swagger-ui/
+Tambem é possivel importa o arquivo client para o Postman ou Insomnia: (https://github.com/isacfarias/ds-banco/blob/feature/rabbitmq_functions/cliente_rest_api.json)
+[doc](https://github.com/isacfarias/ds-banco/blob/feature/rabbitmq_functions/assets/swagger.png)
