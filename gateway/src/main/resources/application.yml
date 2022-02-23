@@ -1,0 +1,57 @@
+server: 
+  port: 8765
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    register-with-eureka: true 
+    fetch-registry: true 
+    service-url:
+      defaultZone: ${EUREKA_SERVER:http://localhost:8761/eureka}  
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+        
+        
+spring:
+  profiles:
+    active: test
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+
+        - id: pessoa-service
+          uri: lb://ds-pessoa
+          predicates:
+          - Path=/ds-pessoa/**
+          filters:
+            - RewritePath=/ds-pessoa/(?<path>.*), /$\{path}          
+          
+        - id: conta-corrente-service
+          uri: lb://ds-conta-corrente
+          predicates:
+          - Path=/ds-conta-corrente/**
+          filters:
+            - RewritePath=/ds-conta-corrente/(?<path>.*), /$\{path}          
+          
+        - id: conta-corrente-produtos-service
+          uri: lb://ds-conta-corrente-produtos
+          predicates:
+          - Path=/ds-conta-corrente-produtos/**
+          filters:
+            - RewritePath=/ds-conta-corrente-produtos/(?<path>.*), /$\{path}
+            
+        - id: produtos-service
+          uri: lb://ds-produtos
+          predicates:
+          - Path=/ds-produtos/**
+          filters:
+            - RewritePath=/ds-produtos/(?<path>.*), /$\{path}
