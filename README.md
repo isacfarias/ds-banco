@@ -72,19 +72,19 @@ caso não tenha maven intalado, pode usar os recurso da IDE para gerar o arquivo
 lembre -se todos os comandos deve ser executados dentro do diretŕio do projeto expecifico.
 
 ### gateway
-  - Hora de gerar nossa imagem docker, na linha de comando execute *docker build -t ds-apigateway-zuul .*
+  - Hora de gerar nossa imagem docker, na linha de comando execute *docker build -t gateway .*
 
 ### eureka-server
-  - Hora de gerar nossa imagem docker, na linha de comando execute *docker build -t ds-eureka-server .*
+  - Hora de gerar nossa imagem docker, na linha de comando execute *docker build -t eureka-server .*
 
 ### pesssoa
-  - Hora de gerar nossa imagem docker, na linha de comando execute *docker build -t ds-pessoa .*
+  - Hora de gerar nossa imagem docker, na linha de comando execute *docker build -t pessoa .*
   
 ### conta-corrente
-  - Hora de gerar nossa imagem docker, na linha de comando execute *docker build -t ds-conta-corrente .*
+  - Hora de gerar nossa imagem docker, na linha de comando execute *docker build -t conta-corrente .*
 
 ### conta-corrente-produtos
-  - Hora de gerar nossa imagem docker, na linha de comando execute *docker build -t ds-conta-corrente-produtos .*
+  - Hora de gerar nossa imagem docker, na linha de comando execute *docker build -t conta-corrente-produtos .*
 
 ### produtos
-  - Hora de gerar nossa imagem docker, na linha de comando execute *docker build -t ds-produtos .*
+  - Hora de gerar nossa imagem docker, na linha de comando execute *docker build -t produtos .*

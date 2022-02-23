@@ -1,7 +1,7 @@
 FROM openjdk:11
 
 VOLUME /tmp
-
-ADD ./target/gateway-0.0.1-SNAPSHOT.jar gateway.jar
+ARG JAR_FILE
+ADD ./target/${JAR_FILE} gateway.jar
 
 ENTRYPOINT ["java", "-jar", "gateway.jar"]

@@ -19,6 +19,7 @@
 		<java.version>11</java.version>
 		<spring-cloud.version>2020.0.3</spring-cloud.version>
 		<org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
+		<dockerfile-maven-version>1.4.13</dockerfile-maven-version>
 	</properties>
 
 	<dependencies>
@@ -112,6 +113,11 @@
 			<version>${org.mapstruct.version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>com.spotify</groupId>
+			<artifactId>dockerfile-maven-plugin</artifactId>
+			<version>${dockerfile-maven-version}</version>
+		</dependency>
 	</dependencies>
 
 	<dependencyManagement>
@@ -178,6 +184,28 @@
 
 					</annotationProcessorPaths>
 				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>dockerfile-maven-plugin</artifactId>
+				<version>${dockerfile-maven-version}</version>
+				<executions>
+					<execution>
+						<id>default</id>
+						<goals>
+							<goal>build</goal>
+						</goals>
+						<configuration>
+<!--							<dockerfile>./Dockerfile</dockerfile>-->
+							<repository>ds-banco/pessoa</repository>
+							<tag>latest</tag>
+							<buildArgs>
+								<JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
+							</buildArgs>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 
 		</plugins>

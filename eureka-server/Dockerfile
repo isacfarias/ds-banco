@@ -1,7 +1,7 @@
 FROM openjdk:11
 
 VOLUME /tmp
-
-ADD ./target/eureka-server-0.0.1-SNAPSHOT.jar eureka-server.jar
+ARG JAR_FILE
+ADD ./target/${JAR_FILE} eureka-server.jar
 
 ENTRYPOINT ["java", "-jar", "eureka-server.jar"]

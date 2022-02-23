@@ -22,6 +22,7 @@
 		<spring-cloud.version>2020.0.3</spring-cloud.version>
 		<lombok.version>1.18.22</lombok.version>
 		<org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
+		<dockerfile-maven-version>1.4.13</dockerfile-maven-version>
 	</properties>
 	
 	<dependencies>
@@ -138,6 +139,12 @@
 			<artifactId>commons-lang3</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>com.spotify</groupId>
+			<artifactId>dockerfile-maven-plugin</artifactId>
+			<version>${dockerfile-maven-version}</version>
+		</dependency>
+
 	</dependencies>
 	
 	<dependencyManagement>
@@ -197,7 +204,26 @@
 					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
-
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>dockerfile-maven-plugin</artifactId>
+				<version>${dockerfile-maven-version}</version>
+				<executions>
+					<execution>
+						<id>default</id>
+						<goals>
+							<goal>build</goal>
+						</goals>
+						<configuration>
+							<repository>ds-banco/conta-corrente</repository>
+							<tag>latest</tag>
+							<buildArgs>
+								<JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
+							</buildArgs>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
