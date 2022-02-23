@@ -62,29 +62,10 @@ Temos os microsservicos
 
 Nesse caso você precisa fazer o clone do mono repo acima, e importar eles na IDE de preferencia, ou pode compilar os .jar com maven e gerar as imagens docker, que usaremos no nosso arquivo docker-compose, complicado, segue o fio:
 
-Caso tenha o maven intalado na maquina mas dentro do diretório do projeto na linha de comando executar:
+Caso tenha o maven intalado na sua maquina:
+você pode no seu terminal executar os comandos abaixo:
 
  - *mvn clean package* - nesse caso ele irá limpar o projeto e gerar seu .jar, porem ele irar executar os testes para garantir a compilação
  - *mvn clean package -DskipTests* - nesse caso ele irá limpar o projeto e gerar seu .jar, porem ele vai pular os testes;
 
-caso não tenha maven intalado, pode usar os recurso da IDE para gerar o arquivo .jar;
-
-lembre -se todos os comandos deve ser executados dentro do diretŕio do projeto expecifico.
-
-### gateway
-  - Hora de gerar nossa imagem docker, na linha de comando execute *docker build -t gateway .*
-
-### eureka-server
-  - Hora de gerar nossa imagem docker, na linha de comando execute *docker build -t eureka-server .*
-
-### pesssoa
-  - Hora de gerar nossa imagem docker, na linha de comando execute *docker build -t pessoa .*
-  
-### conta-corrente
-  - Hora de gerar nossa imagem docker, na linha de comando execute *docker build -t conta-corrente .*
-
-### conta-corrente-produtos
-  - Hora de gerar nossa imagem docker, na linha de comando execute *docker build -t conta-corrente-produtos .*
-
-### produtos
-  - Hora de gerar nossa imagem docker, na linha de comando execute *docker build -t produtos .*
+ como estamos usando o plugin com.spotify, ao realizar o empacotamento com o maven já teremos nossas imagens docker prontas para uso
