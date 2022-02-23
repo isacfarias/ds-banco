@@ -4,4 +4,4 @@ VOLUME /tmp
 ARG JAR_FILE
 ADD ./target/${JAR_FILE} gateway.jar
 
-ENTRYPOINT ["java", "-jar", "gateway.jar"]
+ENTRYPOINT ["java",  "-jar", "gateway.jar"]

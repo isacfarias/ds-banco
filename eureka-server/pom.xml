@@ -101,7 +101,7 @@
 							<goal>build</goal>
 						</goals>
 						<configuration>
-							<repository>ds-banco/eurka-server</repository>
+							<repository>ds-banco/eureka-server</repository>
 							<tag>latest</tag>
 							<buildArgs>
 								<JAR_FILE>${project.build.finalName}.jar</JAR_FILE>

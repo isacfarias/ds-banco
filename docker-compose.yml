@@ -1,6 +1,7 @@
 version: '2'
 
 services:
+
   rabbitmq:
     image: docker.io/bitnami/rabbitmq:3.8
     ports: 
@@ -14,8 +15,77 @@ services:
       - RABBITMQ_PASSWORD=ABC_BANCO
     volumes:
       - 'rabbitmq_data:/bitnami'
+
+  eureka-server-service:
+    image: ds-banco/eureka-server  
+    ports: 
+      - '8761:8761'
+    depends_on:
+      - rabbitmq  
+
+  gateway-service:
+    image: ds-banco/gateway
+    ports: 
+      - '8765:8765'
+    links:
+      - eureka-server-service      
+    depends_on:
+      - eureka-server-service
+    environment:
+      - EUREKA_SERVER=http://eureka-server-service:8761/eureka
+
+  pessoa-service:
+    image: ds-banco/pessoa
+    links:
+      - eureka-server-service
+      - rabbitmq
+    depends_on:
+      - eureka-server-service
+      - gateway-service
+      - rabbitmq
+    environment:
+      - EUREKA_SERVER=http://eureka-server-service:8761/eureka
+      - RABBITMQ_SERVER=rabbitmq:5672
+  
+  conta-corrente-service:
+    image: ds-banco/conta-corrente
+    links:
+      - eureka-server-service
+      - rabbitmq  
+    depends_on:
+      - eureka-server-service
+      - gateway-service
+      - rabbitmq
+    environment:
+      - EUREKA_SERVER=http://eureka-server-service:8761/eureka
+      - RABBITMQ_SERVER=rabbitmq:5672       
+
+  conta-corrente-produtos-service:
+    image: ds-banco/conta-corrente-produtos
+    links:
+      - eureka-server-service
+      - rabbitmq
+    depends_on:
+      - eureka-server-service
+      - gateway-service
+      - rabbitmq
+    environment:
+      - EUREKA_SERVER=http://eureka-server-service:8761/eureka
+      - RABBITMQ_SERVER=rabbitmq:5672
+
+  produtos-service:
+    image: ds-banco/produtos
+    links:
+      - eureka-server-service
+      - rabbitmq
+    depends_on:
+      - eureka-server-service
+      - gateway-service
+      - rabbitmq
+    environment:
+      - EUREKA_SERVER=http://eureka-server-service:8761/eureka
+      - RABBITMQ_SERVER=rabbitmq:5672
+
 volumes:
   rabbitmq_data:
-   driver: local
-
-    
+    driver: local

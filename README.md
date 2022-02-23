@@ -68,4 +68,4 @@ você pode no seu terminal executar os comandos abaixo:
  - *mvn clean package* - nesse caso ele irá limpar o projeto e gerar seu .jar, porem ele irar executar os testes para garantir a compilação
  - *mvn clean package -DskipTests* - nesse caso ele irá limpar o projeto e gerar seu .jar, porem ele vai pular os testes;
 
- como estamos usando o plugin com.spotify, ao realizar o empacotamento com o maven já teremos nossas imagens docker prontas para usogit 
+ como estamos usando o plugin com.spotify, ao realizar o empacotamento com o maven já teremos nossas imagens docker prontas para usar no docker-compose 
