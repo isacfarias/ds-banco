@@ -1,0 +1,53 @@
+server: 
+  port: 8765
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    register-with-eureka: true 
+    fetch-registry: true 
+    service-url:
+      defaultZone: http://localhost:8761/eureka      
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+spring:
+  profiles:
+    active: test
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+      
+        - id: ds-pessoa
+          uri: lb://ds-pessoa
+          predicates:
+          - Path=/pessoa/**
+          
+        - id: ds-conta-corrente
+          uri: lb://ds-conta-corrente
+          predicates:
+          - Path=/contacorrente/**
+          
+        - id: ds-conta-corrente-produtos
+          uri: lb://ds-conta-corrente-produtos
+          predicates:
+          - Path=/contacorrenteprodutos/**        
+
+        - id: ds-produtos
+          uri: lb://ds-produtos
+          predicates:
+          - Path=/produtos/**,/produtosfaixa/**
+            
+
+
+#hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds=60000
+#ribbon.ConnectTimeout=10000
+#ribbon.ReadTimeout=20000
