@@ -23,6 +23,7 @@
 		<lombok.version>1.18.22</lombok.version>
 		<org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
 		<dockerfile-maven-version>1.4.13</dockerfile-maven-version>
+		<springfox-swagger>3.0.0</springfox-swagger>		
 	</properties>
 
 	<dependencies>
@@ -96,13 +97,12 @@
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger2</artifactId>
-			<version>2.9.2</version>
+			<version>${springfox-swagger}</version>
 		</dependency>
-
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger-ui</artifactId>
-			<version>2.9.2</version>
+			<version>${springfox-swagger}</version>
 		</dependency>
 
 		<!-- mapStructs -->

@@ -20,6 +20,7 @@
 		<spring-cloud.version>2020.0.3</spring-cloud.version>
 		<org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
 		<dockerfile-maven-version>1.4.13</dockerfile-maven-version>
+		<springfox-swagger>3.0.0</springfox-swagger>
 	</properties>
 
 	<dependencies>
@@ -84,13 +85,12 @@
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger2</artifactId>
-			<version>2.9.2</version>
+			<version>${springfox-swagger}</version>
 		</dependency>
-
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger-ui</artifactId>
-			<version>2.9.2</version>
+			<version>${springfox-swagger}</version>
 		</dependency>
 
 		<!-- Lombook -->
@@ -150,13 +150,13 @@
 						</exclude>
 					</excludes>
 				</configuration>
-					<executions>
-						<execution>
-							<goals>
-								<goal>repackage</goal>
-							</goals>
-						</execution>
-					</executions>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 
 			<plugin>
@@ -197,7 +197,7 @@
 							<goal>build</goal>
 						</goals>
 						<configuration>
-<!--							<dockerfile>./Dockerfile</dockerfile>-->
+							<!-- <dockerfile>./Dockerfile</dockerfile> -->
 							<repository>ds-banco/pessoa</repository>
 							<tag>latest</tag>
 							<buildArgs>

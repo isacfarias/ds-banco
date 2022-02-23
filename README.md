@@ -60,12 +60,21 @@ Temos os microsservicos
 
 ## Quer testar os aplicativos
 
-Nesse caso você precisa fazer o clone do mono repo acima, e importar eles na IDE de preferencia, ou pode compilar os .jar com maven e gerar as imagens docker, que usaremos no nosso arquivo docker-compose, complicado, segue o fio:
+Nesse caso você precisa fazer o clone do mono repo acima, e importar eles na IDE de sua preferência, ou pode compilar os .jar com maven e gerar as imagens docker, que usaremos no nosso arquivo docker-compose, complicado, segue o fio:
 
 Caso tenha o maven intalado na sua maquina:
-você pode no seu terminal executar os comandos abaixo:
+No seu terminal execute os comandos abaixo:
 
  - *mvn clean package* - nesse caso ele irá limpar o projeto e gerar seu .jar, porem ele irar executar os testes para garantir a compilação
  - *mvn clean package -DskipTests* - nesse caso ele irá limpar o projeto e gerar seu .jar, porem ele vai pular os testes;
 
- como estamos usando o plugin com.spotify, ao realizar o empacotamento com o maven já teremos nossas imagens docker prontas para usar no docker-compose 
+ Como estamos usando o plugin com.spotify, ao realizar o empacotamento com o maven já teremos nossas imagens docker prontas para usar no docker-compose, ao finalizar o processo de gerar as imagens docker, é hora de subir os microsserviçoes, temos o docker-compose todo configurado agora é executar o 
+ 
+ comando:
+ - docker-compose up -d
+
+Com isso teremos os serviços rabbitMQ, gateway, eureka-server, pessoa, conta-corrente, conta-corrente-produtos, produtos.
+
+Feito isso já é possivel ver os serviços online: http://localhost:8761/
+Caso queira conhecer os endpoint disponivel e o modelo de dados: http://localhost:8765/swagger-ui/
+
