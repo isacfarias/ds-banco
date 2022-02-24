@@ -5,7 +5,7 @@ O projeto ds-banco vem com a ideia de consolidar conhecimentos adquidos em minha
 portanto pode ter coisa que não faça sentido, mas foi uma forma de explorar a ideia, e aplicar o maximo de recurso possivel.
 
 # Diagrama da disposição dos microserviços
-![Modelo](https://github.com/isacfarias/ds-banco/blob/feature/rabbitmq_functions/assets/ds-banco-diagrama.png)
+![Modelo](https://github.com/isacfarias/ds-banco/blob/main/assets/ds-banco-diagrama.png)
 
 ## Tecnologias
 
@@ -72,21 +72,21 @@ No seu terminal execute os comandos abaixo:
  - *mvn clean package -DskipTests* - nesse caso ele irá limpar o projeto e gerar seu .jar, porem ele vai pular os testes;
 
  Como estamos usando o plugin com.spotify, ao realizar o empacotamento com o maven, já teremos as imagens docker prontas ao final do build.
- ![docker-images](https://github.com/isacfarias/ds-banco/blob/feature/rabbitmq_functions/assets/docker-images.png)
+ ![docker-images](https://github.com/isacfarias/ds-banco/blob/main/assets/docker-images.png)
 
  Com o processo de build finalizado é hora de subir os microsserviçoes, temos o nosso docker-compose na raiz do repo todo configurado, sendo necessário executar o comando:
  - docker-compose up -d
 
- ![docker-compose](https://github.com/isacfarias/ds-banco/blob/feature/rabbitmq_functions/assets/docker-compose.png)
+ ![docker-compose](https://github.com/isacfarias/ds-banco/blob/main/assets/docker-compose.png)
 
 Com isso teremos os serviços rabbitMQ, gateway, eureka-server, pessoa, conta-corrente, conta-corrente-produtos, produtos online.
 
 Feito isso já é possivel ver os serviços online: http://localhost:8761/
-![eureka-server](https://github.com/isacfarias/ds-banco/blob/feature/rabbitmq_functions/assets/eureka-server.png)
+![eureka-server](https://github.com/isacfarias/ds-banco/blob/main/assets/eureka-server.png)
 
 
 Caso queira conhecer os endpoint disponivel e o modelo de dados: http://localhost:8765/swagger-ui/
 
-Tambem é possivel importa o arquivo client para o Postman ou Insomnia: [client_rest_api.json](https://github.com/isacfarias/ds-banco/blob/feature/rabbitmq_functions/cliente_rest_api.json)
+Tambem é possivel importa o arquivo client para o Postman ou Insomnia: [client_rest_api.json](https://github.com/isacfarias/ds-banco/blob/main/cliente_rest_api.json)
 
-![doc](https://github.com/isacfarias/ds-banco/blob/feature/rabbitmq_functions/assets/swagger.png)
+![doc](https://github.com/isacfarias/ds-banco/blob/main/assets/swagger.png)
