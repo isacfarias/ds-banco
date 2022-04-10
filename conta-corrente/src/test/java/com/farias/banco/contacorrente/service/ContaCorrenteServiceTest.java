@@ -34,7 +34,7 @@ class ContaCorrenteServiceTest {
 	@Mock
 	private ContaCorrenteRepository repository;
 	@Mock
-	private ContaCorrenteProdutosFeignClients contaCorrenteProdutosFeignClients;
+	private ContaCorrenteProdutosService contaCorrenteProdutosService;
 	@Mock
 	private ContaCorrenteNumeroUtils contaNumero;
 	@Mock

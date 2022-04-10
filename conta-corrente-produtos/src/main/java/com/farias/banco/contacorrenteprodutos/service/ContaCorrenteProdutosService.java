@@ -32,12 +32,12 @@ public class ContaCorrenteProdutosService {
 	private final Logger LOG = LoggerFactory.getLogger(ContaCorrenteProdutosService.class);
 
 	private final ContaCorrenteProdutosRepository repository;
-	private final ProdutosFeignClient produtosScoreFeignClient;
+	private final ProdutosService produtosService;
 	private final ProdutosContaCorrenteMessageSupplier outbound;
 
 	public void vincularProdutosContaCorrente(PessoaContaCorrenteDTO pessoaContaCorrente) {
 		try {
-			Objects.requireNonNull(produtosScoreFeignClient.produtosPorScore(pessoaContaCorrente.getScore()).getBody())
+			Objects.requireNonNull(produtosService.findProductScore(pessoaContaCorrente))
 			.stream()
 			.filter( produto -> !(produto.getProduto().equals(PROD_CARTAO_CREDITO)
 					&& produto.getValor().compareTo(new BigDecimal("0.0")) <= 0 ))
@@ -65,7 +65,7 @@ public class ContaCorrenteProdutosService {
 	private List<ContaCorrenteProdutoDTO> buildDTO(ContaCorrenteProdutos contaCorrenteProdutos) {
 		List<ContaCorrenteProdutoDTO> produtos = null;
 		try {
-			produtos = produtosScoreFeignClient.produto(contaCorrenteProdutos.getProdutoTipo(), PageRequest.of(0, 10)).getContent()
+			produtos = produtosService.findProductType(contaCorrenteProdutos)
 					.stream()
 					.filter(Objects:: nonNull)
 					.map(c -> contaCorrenteMapper.buildContaCorrenteProdutosDTO(c)

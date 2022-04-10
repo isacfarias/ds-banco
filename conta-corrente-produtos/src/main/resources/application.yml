@@ -64,3 +64,9 @@ spring:
 
   jpa:
     open-in-view: false
+    
+resilience4j.circuitbreaker:
+  instances:
+    findProductScore:
+      slidingWindowSize: 8   
+      minimumNumberOfCalls: 4    

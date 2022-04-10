@@ -37,7 +37,7 @@ public class ContaCorrenteService {
 
 	private final AppConfig config;
 	private final ContaCorrenteRepository repository;
-	private final ContaCorrenteProdutosFeignClients contaCorrenteProdutosFeignClients;
+	private final ContaCorrenteProdutosService contaCorrenteProdutosService;
 	private final ContaCorrenteNumeroUtils contaNumero;
 	private final ContaCorrenteMessageSupplier outbound;
 
@@ -81,18 +81,8 @@ public class ContaCorrenteService {
 	}
 
 	private ContaCorrenteResponseDTO contaCorrenteProdutos(ContaCorrente contaCorrente) {
-			List<ContaCorrenteProdutoDTO> produtos = List.of();
-			try {
-				produtos = contaCorrenteProdutosFeignClients.contaCorrenteProdutos(contaCorrente.getId(), PageRequest.of(0, 10)).getContent()
-						  .stream()
-						  .flatMap(Collection<ContaCorrenteProdutoDTO>::stream)
-						  .collect(Collectors.toList());
-			} catch (Exception e) {
-				LOG.error("O serviço [ds-conta-corrente-produtos] listar produtos vinculados a conta corrente não está respondendo.", e.getMessage());
-			}
-			
 			return contaCorrenteMapper.buildContaCorrenteResponseDTO(contaCorrente)
-					.withProdutos(produtos);
+					.withProdutos(contaCorrenteProdutosService.findProductAccount(contaCorrente));
 	}
 
 	private Integer contaNumero() {

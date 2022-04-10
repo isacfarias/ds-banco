@@ -23,7 +23,7 @@
 		<lombok.version>1.18.22</lombok.version>
 		<org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
 		<dockerfile-maven-version>1.4.13</dockerfile-maven-version>
-		<springfox-swagger>3.0.0</springfox-swagger>		
+		<springfox-swagger>3.0.0</springfox-swagger>
 	</properties>
 
 	<dependencies>
@@ -43,6 +43,11 @@
 			<artifactId>spring-boot-devtools</artifactId>
 			<scope>runtime</scope>
 			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
 		</dependency>
 
 		<dependency>
@@ -122,6 +127,12 @@
 			<groupId>com.spotify</groupId>
 			<artifactId>dockerfile-maven-plugin</artifactId>
 			<version>${dockerfile-maven-version}</version>
+		</dependency>
+
+		<!-- Resilience4j -->
+		<dependency>
+			<groupId>io.github.resilience4j</groupId>
+			<artifactId>resilience4j-spring-boot2</artifactId>
 		</dependency>
 
 	</dependencies>
