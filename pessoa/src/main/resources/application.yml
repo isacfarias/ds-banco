@@ -95,6 +95,7 @@ spring:
 #ribbon: 
 #  ConnectTimeout: 10000
 #  ReadTimeout: 20000
+
   
 
 
